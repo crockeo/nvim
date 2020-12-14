@@ -1,3 +1,5 @@
 autoload/
 bin/
 plugs/
+
+.netrwhist

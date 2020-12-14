@@ -38,59 +38,20 @@ end
 local plug = require('plug')
 plug.start(config_dir .. '/plugs')
    plug.install('neovim/nvim-lspconfig')
+   plug.install('nvim-lua/completion-nvim')
    plug.install('Shougo/denite.nvim')
    plug.install('tpope/vim-commentary')
    plug.install('tpope/vim-sensible')
 plug.stop()
 
-local plug_configs = {
+-- install a bunch of other configs
+local sub_configs = {
+    require('colorscheme'),
+    require('keymaps'),
+    require('lsp'),
+    require('options'),
     require('plug_config/denite'),
 }
-for _, plug_config in ipairs(plug_configs) do
-    plug_config.init()
+for _, sub_config in ipairs(sub_configs) do
+    sub_config.init()
 end
-
--- configuration!!! wooh!
-local config = require('config')
-config.set_keymaps({
-    all = {
-        {'<C-a>', '<Home>', {}},
-        {'<C-e>', '<End>', {}},
-        {'<C-g>', '<ESC>', {}},
-        {'<C-x><Left>', ':tabp<CR>', {}},
-        {'<C-x><Right>', ':tabn<CR>', {}},
-        {'<C-x>1', '<C-w>o', {}},
-    },
-    c = {
-        {'<C-g>', '<ESC>', {}},
-    },
-    i = {
-        {'<C-a>', '<Home>', {}},
-        {'<C-e>', '<End>', {}},
-        {'<C-f>', '<ESC>', {}},
-    },
-    n = {
-        {'<C-c>c', 'gc<Right>', {}},
-        {'<C-x><C-f>', ':e ', {}},
-        {';', ':b#<CR>', {}},
-    },
-    v = {
-        {'<C-c>c', 'gc', {}},
-    },
-})
-config.set_options({
-   backup = false,
-   expandtab = true,
-   shiftwidth = 4,
-   smarttab = true,
-   softtabstop = 0,
-   wrap = false,
-   number = true,
-})
-
--- setting up LSP
-local lspconfig = require('lspconfig')
-
-lspconfig.clangd.setup{}
-lspconfig.gopls.setup{}
-lspconfig.pyls_ms.setup{}
