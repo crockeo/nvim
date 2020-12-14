@@ -16,6 +16,7 @@ plug.stop()
 
 -- configuration!!! wooh!
 local config = require('config')
+-- TODO: make this work inside of set_keymaps
 config.set_keymaps({
     all = {
         {'<C-a>', '<Home>', {}},
@@ -32,7 +33,7 @@ config.set_keymaps({
     },
     n = {
         {'<C-c>c', 'gc<Right>', {}},
-	{'<C-x><C-f>', ': e', {}}, -- oh dear god why won't she (emacs) take me back
+	{'<C-x><C-f>', ':e ', {}}, -- oh dear god why won't she (emacs) take me back
         {';', ':b#<CR>', {}},
     },
     v = {
