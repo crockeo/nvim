@@ -35,12 +35,20 @@ if vim.fn.filereadable(vim.fn.expand(plug_file)) == 0 then
 end
 
 -- plugs!!
-local plug = require('lua/plug')
+local plug = require('plug')
 plug.start(config_dir .. '/plugs')
    plug.install('neovim/nvim-lspconfig')
+   plug.install('Shougo/denite.nvim')
    plug.install('tpope/vim-commentary')
    plug.install('tpope/vim-sensible')
 plug.stop()
+
+local plug_configs = {
+    require('plug_config/denite'),
+}
+for _, plug_config in ipairs(plug_configs) do
+    plug_config.init()
+end
 
 -- configuration!!! wooh!
 local config = require('config')
@@ -51,6 +59,7 @@ config.set_keymaps({
         {'<C-g>', '<ESC>', {}},
         {'<C-x><Left>', ':tabp<CR>', {}},
         {'<C-x><Right>', ':tabn<CR>', {}},
+        {'<C-x>1', '<C-w>o', {}},
     },
     c = {
         {'<C-g>', '<ESC>', {}},
@@ -70,15 +79,13 @@ config.set_keymaps({
     },
 })
 config.set_options({
-    -- TODO: figure out why it doesn't like backspace
-    -- backspace = 'indenteol,start',
-    backup = false,
-    expandtab = true,
-    number = true,
-    shiftwidth = 4,
-    softtabstop = 4,
-    tabstop = 4,
-    wrap = false,
+   backup = false,
+   expandtab = true,
+   shiftwidth = 4,
+   smarttab = true,
+   softtabstop = 0,
+   wrap = false,
+   number = true,
 })
 
 -- setting up LSP

@@ -1,5 +1,6 @@
 -- set_keymaps sets a bunch of keymaps w/ nvim_set_keymap using the syntax:
 --
+--
 -- set_keymaps({
 --     -- all modes
 --     all = {
@@ -21,7 +22,7 @@ local function set_keymaps(keymaps)
         end
 
         for _, keybind in ipairs(keybinds) do
-	    vim.api.nvim_set_keymap(mode, keybind[1], keybind[2], keybind[3])
+            vim.api.nvim_set_keymap(mode, keybind[1], keybind[2], keybind[3])
         end
     end
 end
@@ -31,9 +32,23 @@ end
 -- set_options({
 --     option_name = "option value or whatever",
 -- })
+--
+-- As an aside, we do this nonsense about vim.fn.nvim_command, instead of
+-- setting things directly because the Lua API has no concept of
+-- global-locals.
 local function set_options(options)
     for option, value in pairs(options) do
-        vim.api.nvim_set_option(option, value)
+        local option_command
+        if type(value) == 'boolean' then
+            option_command = option
+            if not value then
+                option_command = 'no' .. option_command
+            end
+        else
+            option_command = option .. '=' .. value
+        end
+        option_command = ':set ' .. option_command
+        vim.fn.nvim_command(option_command)
     end
 end
 
