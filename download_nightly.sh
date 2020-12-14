@@ -9,6 +9,7 @@ curl \
     https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz
 tar -xf $dir/bin/nvim-macos.tar.gz --directory $dir/bin
 
-if [ ! -f ~/bin/nvim ]; then
-    ln -s $dir/bin/nvim-osx64/bin/nvim ~/bin/nvim
+if [ -f ~/bin/nvim ]; then
+    rm ~/bin/nvim
 fi
+ln -s $dir/bin/nvim-osx64/bin/nvim ~/bin/nvim
