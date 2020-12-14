@@ -14,25 +14,33 @@ plug.start(config_dir .. '/plugs')
    plug.install('tpope/vim-sensible')
 plug.stop()
 
--- keymaps!
-vim.api.nvim_set_keymap('', '<C-a>', '<Home>', {})
-vim.api.nvim_set_keymap('', '<C-e>', '<End>', {})
-vim.api.nvim_set_keymap('', '<C-x><C-f>', ':e ', {})
-vim.api.nvim_set_keymap('', '<C-g>', '<ESC>', {})
-
-vim.api.nvim_set_keymap('n', '<C-c>c', 'gc<Right>', {})
-vim.api.nvim_set_keymap('n', ';', ':b#<CR>', {})
-vim.api.nvim_set_keymap('n', '<C-c><C-r>', ':luafile %<CR>', {})
-
-vim.api.nvim_set_keymap('i', '<C-a>', '<Home>', {})
-vim.api.nvim_set_keymap('i', '<C-e>', '<End>', {})
-vim.api.nvim_set_keymap('i', '<C-f>', '<ESC>', {})
-
-vim.api.nvim_set_keymap('v', '<C-c>c', 'gc', {})
-
--- misc config
-configs = {
-    -- TODO: figure out
+-- configuration!!! wooh!
+local config = require('config')
+config.set_keymaps({
+    all = {
+        {'<C-a>', '<Home>', {}},
+        {'<C-e>', '<End>', {}},
+        {'<C-g>', '<ESC>', {}}, -- listen i miss emacs, ok?
+    },
+    c = {
+        {'<C-g>', '<ESC>', {}}, -- ...i really miss emacs
+    },
+    i = {
+        {'<C-a>', '<Home>', {}},
+        {'<C-e>', '<End>', {}},
+        {'<C-f>', '<ESC>', {}},
+    },
+    n = {
+        {'<C-c>c', 'gc<Right>', {}},
+	{'<C-x><C-f>', ': e', {}}, -- oh dear god why won't she (emacs) take me back
+        {';', ':b#<CR>', {}},
+    },
+    v = {
+        {'<C-c>c', 'gc', {}},
+    },
+})
+config.set_options({
+    -- TODO: figure out why it doesn't like backspace
     -- backspace = 'indenteol,start',
     backup = false,
     expandtab = true,
@@ -41,10 +49,7 @@ configs = {
     softtabstop = 4,
     tabstop = 4,
     wrap = false,
-}
-for option, value in pairs(configs) do
-    vim.api.nvim_set_option(option, value)
-end
+})
 
 -- setting up LSP
 -- local lspconfig = require('lspconfig')
