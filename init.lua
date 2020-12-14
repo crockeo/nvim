@@ -44,15 +44,16 @@ plug.stop()
 
 -- configuration!!! wooh!
 local config = require('config')
--- TODO: make this work inside of set_keymaps
 config.set_keymaps({
     all = {
         {'<C-a>', '<Home>', {}},
         {'<C-e>', '<End>', {}},
-        {'<C-g>', '<ESC>', {}}, -- listen i miss emacs, ok?
+        {'<C-g>', '<ESC>', {}},
+        {'<C-x><Left>', ':tabp<CR>', {}},
+        {'<C-x><Right>', ':tabn<CR>', {}},
     },
     c = {
-        {'<C-g>', '<ESC>', {}}, -- ...i really miss emacs
+        {'<C-g>', '<ESC>', {}},
     },
     i = {
         {'<C-a>', '<Home>', {}},
@@ -61,7 +62,7 @@ config.set_keymaps({
     },
     n = {
         {'<C-c>c', 'gc<Right>', {}},
-	{'<C-x><C-f>', ':e ', {}}, -- oh dear god why won't she (emacs) take me back
+        {'<C-x><C-f>', ':e ', {}},
         {';', ':b#<CR>', {}},
     },
     v = {
@@ -81,8 +82,8 @@ config.set_options({
 })
 
 -- setting up LSP
--- local lspconfig = require('lspconfig')
+local lspconfig = require('lspconfig')
 
--- lspconfig.clangd.setup{}
--- lspconfig.gopls.setup{}
--- lspconfig.pyls_ms.setup{}
+lspconfig.clangd.setup{}
+lspconfig.gopls.setup{}
+lspconfig.pyls_ms.setup{}

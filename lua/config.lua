@@ -15,22 +15,15 @@
 -- Which translates into one keybind for everything, and another keybind for
 -- visual mode that both comment stuff out with vim-commentary.
 local function set_keymaps(keymaps)
-    -- TODO: migrate setting keymaps to the keymaps provided; should be equivalent just defined in main file
-    vim.api.nvim_set_keymap('', '<C-a>', '<Home>', {})
-    vim.api.nvim_set_keymap('', '<C-e>', '<End>', {})
-    vim.api.nvim_set_keymap('', '<C-x><C-f>', ':e ', {})
-    vim.api.nvim_set_keymap('', '<C-g>', '<ESC>', {})
+    for mode, keybinds in pairs(keymaps) do
+        if mode == 'all' then
+            mode = ''
+        end
 
-    vim.api.nvim_set_keymap('n', '<C-c>c', 'gc<Right>', {})
-    vim.api.nvim_set_keymap('n', ';', ':b#<CR>', {})
-
-    vim.api.nvim_set_keymap('i', '<C-a>', '<Home>', {})
-    vim.api.nvim_set_keymap('i', '<C-e>', '<End>', {})
-    vim.api.nvim_set_keymap('i', '<C-f>', '<ESC>', {})
-
-    vim.api.nvim_set_keymap('v', '<C-c>c', 'gc', {})
-
-    vim.api.nvim_set_keymap('c', '<C-g>', '<ESC>', {})
+        for _, keybind in ipairs(keybinds) do
+	    vim.api.nvim_set_keymap(mode, keybind[1], keybind[2], keybind[3])
+        end
+    end
 end
 
 -- set_options sets a bunch of options w/ nvim_set_option using the syntax
