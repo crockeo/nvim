@@ -30,11 +30,11 @@ end
 -- plugs!!
 local plug = require('plug')
 plug.start(config_dir .. '/plugs')
-   plug.install('neovim/nvim-lspconfig')
-   plug.install('nvim-lua/completion-nvim')
-   plug.install('Shougo/denite.nvim')
-   plug.install('tpope/vim-commentary')
-   plug.install('tpope/vim-sensible')
+    plug.install('neovim/nvim-lspconfig')
+    plug.install('nvim-lua/completion-nvim')
+    plug.install('Shougo/denite.nvim')
+    plug.install('tpope/vim-commentary')
+    plug.install('tpope/vim-sensible')
 plug.stop()
 
 -- install a bunch of other configs

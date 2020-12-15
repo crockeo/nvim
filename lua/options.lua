@@ -6,6 +6,7 @@ local function init()
         -- TODO: move this into a plugin-specific configuration file!!
         completeopt = 'menuone,noinsert,noselect',
         expandtab = true,
+        hidden = true,
         nohlsearch = true,
         shiftwidth = 4,
         smarttab = true,

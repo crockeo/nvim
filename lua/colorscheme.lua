@@ -73,6 +73,7 @@ local function init()
     set_color("Pmenu", {guibg = hawaii_background_light})
     set_color("PmenuSel", {guifg = hawaii_background, guibg = hawaii_highlight_orange})
     set_color("StatusLine", {guifg = hawaii_background_dark, guibg = hawaii_comment})
+    set_color("Structure", {guifg = hawaii_text, gui = "NONE"})
     set_color("Todo", {guifg = hawaii_highlight_red, guibg = hawaii_background, gui = "bold"})
     set_color("Visual", {guifg = hawaii_background, guibg = hawaii_highlight_orange})
 end

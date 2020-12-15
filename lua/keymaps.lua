@@ -23,6 +23,7 @@ local function init()
         n = {
             {'<C-c>c', 'gc<Right>', {}},
             {'<C-x><C-f>', ':e ', {}},
+            {'<C-x>o', '<C-w>w', {}},
             {';', ':b#<CR>', {}},
         },
         v = {
