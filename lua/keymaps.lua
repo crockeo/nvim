@@ -4,6 +4,8 @@ local function init()
     config.set_keymaps({
         all = {
             {'<C-a>', '<Home>', {}},
+            {'<C-c>jg', '<cmd>lua vim.lsp.buf.definition()<CR>', {}},
+            {'<C-c>jb', '<C-o>', {}},
             {'<C-e>', '<End>', {}},
             {'<C-g>', '<ESC>', {}},
             {'<C-x><Left>', ':tabp<CR>', {}},
@@ -11,7 +13,7 @@ local function init()
             {'<C-x>1', '<C-w>o', {}},
         },
         c = {
-            {'<C-g>', '<ESC>', {}},
+            {'<C-g>', '<C-c>', {}},
         },
         i = {
             {'<C-a>', '<Home>', {}},

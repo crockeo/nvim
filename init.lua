@@ -4,12 +4,6 @@
 --     * find file in git project
 --     * find string in git project (ag)
 --     * NICE TO HAVE: global find and replace in project WITH previews
---   * LSP support
---     * microsoft python language server
---     * clangd
---     * gopls
---     * rls
---   * jump to defn (will probably be through LSP?)
 --   * file support for weird files
 --     * bazel BUILD files
 --     * saltstack files
@@ -23,7 +17,6 @@
 --   * probably more!! good luck :)
 --   * nvim things:
 --     * make TODOs not be so gaudy
---     * don't highlight everything in the file after a search/replace
 
 -- bootstrapping plug :)
 local config_dir = '~/.config/nvim'
@@ -46,12 +39,13 @@ plug.stop()
 
 -- install a bunch of other configs
 local sub_configs = {
-    require('colorscheme'),
-    require('keymaps'),
-    require('lsp'),
-    require('options'),
-    require('plug_config/denite'),
+    'colorscheme',
+    'keymaps',
+    'lsp',
+    'options',
+    'plug_config/denite',
 }
-for _, sub_config in ipairs(sub_configs) do
-    sub_config.init()
+for _, config_name in ipairs(sub_configs) do
+    local config = require(config_name)
+    config.init()
 end
