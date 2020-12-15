@@ -1,5 +1,5 @@
 local hawaii_background = "#332a24"
-local hawaii_background_light = "#40352d"
+local hawaii_background_light = "#594a3e"
 local hawaii_background_dark = "#26201b"
 local hawaii_comment = "#997e6d"
 local hawaii_highlight_blue = "#79eaf2"
@@ -70,12 +70,11 @@ local function init()
     )
 
     set_color("Normal", {guifg = hawaii_text, guibg=hawaii_background})
-    set_color("StatusLine", {guibg = hawaii_background_dark})
-    set_color("Todo", {guifg = hawaii_highlight_red, guibg = hawaii_background, gui = "bold"})
-    set_color("Visual", {guifg = hawaii_background, guibg = hawaii_highlight_orange})
-
     set_color("Pmenu", {guibg = hawaii_background_light})
     set_color("PmenuSel", {guifg = hawaii_background, guibg = hawaii_highlight_orange})
+    set_color("StatusLine", {guifg = hawaii_background_dark, guibg = hawaii_comment})
+    set_color("Todo", {guifg = hawaii_highlight_red, guibg = hawaii_background, gui = "bold"})
+    set_color("Visual", {guifg = hawaii_background, guibg = hawaii_highlight_orange})
 end
 
 return {
