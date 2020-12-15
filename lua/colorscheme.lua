@@ -9,6 +9,10 @@ local hawaii_highlight_purple = "#bb80ff"
 local hawaii_highlight_red = "#ff4040"
 local hawaii_text = "#ffffff"
 
+-- TODO:
+--   * #include directives (purple bold)
+--   * const
+
 local function set_color(category, config)
     local config_parts = {}
     for key, value in pairs(config) do
