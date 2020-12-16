@@ -22,6 +22,8 @@ local function init()
         },
         n = {
             {'<C-c>c', 'gc<Right>', {}},
+            {'<C-c>d', ':NERDTreeToggle<CR>', {}},
+            {'<C-c>s', '<cmd>lua vim.lsp.buf.formatting()<CR>', {}},
             {'<C-x><C-f>', ':e ', {}},
             {'<C-x>o', '<C-w>w', {}},
             {';', ':b#<CR>', {}},

@@ -1,5 +1,14 @@
 local config = require("config")
 
+local function ft_settings()
+    -- TODO: migrate config from ftplugin/denite.vim over to here +
+    -- ft_settings_filter to make sure everything stays in lua
+end
+
+local function ft_settings_filter()
+    ft_settings()
+end
+
 local function init()
     vim.fn["denite#custom#var"]("grep", "command", {"ag"})
     vim.fn["denite#custom#var"]("grep", "default_opts", {"-i", "--vimgrep"})
@@ -29,8 +38,15 @@ local function init()
     for key, value in pairs(options) do
         vim.fn["denite#custom#option"]("default", key, value)
     end
+
+    -- vim.api.nvim_exec([[
+-- autocmd FileType denite lua require('plug_config/denite').ft_settings()
+-- autocmd FileType denite-filter lua require('plug_config/denite').ft_settings_filter()
+    -- ]], false)
 end
 
 return {
+    ft_settings = ft_settings,
+    ft_settings_filter = ft_settings_filter,
     init = init,
 }
