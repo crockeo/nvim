@@ -22,7 +22,7 @@ local function init()
     config.set_keymaps({
         all = {
             {"<C-c>bf", ":Denite buffer<CR>", {}},
-            {"<C-c>pa", ":DeniteProjectDir grep<CR>", {}},
+            {"<C-c>pa", ":DeniteProjectDir grep:::!<CR>", {}},
             {"<C-c>pf", ":DeniteProjectDir file/rec<CR>", {}},
         },
     })
