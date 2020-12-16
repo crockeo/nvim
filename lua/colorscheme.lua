@@ -5,6 +5,7 @@ local hawaii_comment = "#997e6d"
 local hawaii_highlight_blue = "#79eaf2"
 local hawaii_highlight_green = "#aff279"
 local hawaii_highlight_orange = "#ffb080"
+local hawaii_highlight_yellow = "#ffd980"
 local hawaii_highlight_purple = "#bb80ff"
 local hawaii_highlight_red = "#ff4040"
 local hawaii_text = "#ffffff"
@@ -44,7 +45,7 @@ local function init()
     -- Builtins
     set_stylegroup(
         {guifg = hawaii_highlight_purple},
-        {"Boolean", "Constant", "Float", "Number", "Type", "Special"}
+        {"Boolean", "Constant", "Float", "Number", "PreProc", "Type", "Special"}
     )
 
     -- Stringlikes
@@ -68,7 +69,14 @@ local function init()
     -- Comment-like
     set_stylegroup(
         {guifg = hawaii_comment},
-        {"Comment", "LineNr"}
+        {
+            "Comment",
+            "LineNr",
+            "LspDiagnosticsDefaultError",
+            "LspDiagnosticsDefaultWarning",
+            "LspDiagnosticsDefaultHint",
+            "LspDiagnosticsDefaultInformation",
+        }
     )
 
     -- Hidden
@@ -83,8 +91,14 @@ local function init()
     set_color("StatusLine", {guifg = hawaii_background_dark, guibg = hawaii_comment})
     set_color("StatusLineNC", {guifg = hawaii_background_dark, guibg = hawaii_comment})
     set_color("Structure", {guifg = hawaii_text, gui = "NONE"})
+    -- TODO: Todo highlighting is broken!!
     set_color("Todo", {guifg = hawaii_highlight_red, guibg = hawaii_background, gui = "bold"})
     set_color("Visual", {guifg = hawaii_background, guibg = hawaii_highlight_orange})
+
+    set_color("DiffAdd", {guifg = hawaii_highlight_green})
+    set_color("DiffChange", {guifg = hawaii_highlight_yellow})
+    set_color("DiffDelete", {guifg = hawaii_highlight_red})
+    set_color("DiffText", {guifg = hawaii_text})
 
     -- TODO: confirmed need this
     -- :hi Cursor guibg=khaki guifg=slategrey
@@ -103,7 +117,6 @@ local function init()
     --
     -- TODO: don't know if i need this
     -- :hi Include guifg=red ctermfg=red
-    -- :hi PreProc guifg=red guibg=white ctermfg=red
     -- :hi Operator guifg=Red ctermfg=Red
     -- :hi Define guifg=gold gui=bold ctermfg=yellow
     -- :hi Type guifg=CornflowerBlue ctermfg=2
@@ -116,10 +129,6 @@ local function init()
     -- :hi ErrorMsg cterm=bold guifg=White guibg=Red cterm=bold ctermfg=7 ctermbg=1
     -- :hi VisualNOS cterm=bold,underline
     -- :hi WildMenu ctermfg=0 ctermbg=3
-    -- :hi DiffAdd ctermbg=4
-    -- :hi DiffChange ctermbg=5
-    -- :hi DiffDelete cterm=bold ctermfg=4 ctermbg=6
-    -- :hi DiffText cterm=bold ctermbg=1
     -- :hi Underlined cterm=underline ctermfg=5
     -- :hi Error guifg=White guibg=Red cterm=bold ctermfg=7 ctermbg=1
     -- :hi SpellErrors guifg=White guibg=Red cterm=bold ctermfg=7 ctermbg=1
