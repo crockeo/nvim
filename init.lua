@@ -1,10 +1,8 @@
 -- TODO: feature checklist
---   * file support for weird files
---     * bazel BUILD files
---     * saltstack files
---     * .proto files
---     * yaml
 --   * multi-pane workflow (have multiple files open at the same time)
+--   * rust tooling:
+--     * sometimes rls disconnects, complaining about neovim LSP misbeahving
+--     * treesitter grammar for rust sometimes bugs out
 
 -- bootstrapping plug :)
 local config_dir = '~/.config/nvim'
@@ -20,11 +18,12 @@ local plug = require('plug')
 plug.start(config_dir .. '/plugs')
     plug.install('neovim/nvim-lspconfig')
     plug.install('nvim-lua/completion-nvim')
-    plug.install('nvim-treesitter/nvim-treesitter')
+    -- plug.install('nvim-treesitter/nvim-treesitter')
     plug.install('preservim/nerdtree')
     plug.install('Shougo/denite.nvim')
     plug.install('tpope/vim-commentary')
     plug.install('tpope/vim-sensible')
+    plug.install('tpope/vim-sleuth')
 plug.stop()
 
 -- install a bunch of other configs
@@ -40,3 +39,7 @@ for _, config_name in ipairs(sub_configs) do
     local config = require(config_name)
     config.init()
 end
+
+vim.api.nvim_exec([[
+set clipboard+=unnamedplus
+]], false)

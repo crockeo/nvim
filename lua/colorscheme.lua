@@ -44,7 +44,7 @@ end
 local function init()
     -- Builtins
     set_stylegroup(
-        {guifg = hawaii_highlight_purple},
+        {guifg = hawaii_highlight_purple, gui = "NONE"},
         {"Boolean", "Constant", "Float", "Number", "PreProc", "Type", "Special"}
     )
 

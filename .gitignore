@@ -3,3 +3,4 @@ bin/
 plugs/
 
 .netrwhist
+*.pyc

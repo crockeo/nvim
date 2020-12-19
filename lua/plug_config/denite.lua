@@ -1,4 +1,5 @@
 local config = require("config")
+    vim.fn["denite#custom#alias"]("source", "file/projects", "directory_rec")
 
 local function ft_settings()
     -- TODO: migrate config from ftplugin/denite.vim over to here +
@@ -19,9 +20,20 @@ local function init()
 
     vim.fn["denite#custom#var"]('file/rec', 'command', {'ag', '--follow', '--nocolor', '--nogroup', '-g', ''})
 
+    -- vim.fn["denite#custom#alias"]("source", "file/projects", "directory_rec")
+    -- vim.fn["denite#custom#var"]("file/projects", "command", {"pj", ".git", "~/src", "~/personalsrc"})
+    -- vim.fn["denite#custom#alias"]("source", "projects", "grep")
+    -- vim.fn["denite#custom#var"]("projects", "command", {"pj"})
+    -- vim.fn["denite#custom#var"]("projects", "default_opts", {".git", "/Users/chille/src", "/Users/chillen/personalsrc"})
+    -- vim.fn["denite#custom#var"]("projects", "recursive_opts", {})
+    -- vim.fn["denite#custom#var"]("projects", "pattern_opt", {})
+    -- vim.fn["denite#custom#var"]("projects", "separator", {"--"})
+    -- vim.fn["denite#custom#var"]("projects", "final_opts", {})
+
     config.set_keymaps({
         all = {
             {"<C-c>bf", ":Denite buffer<CR>", {}},
+            {"<C-c>pp", ":Denite pj<CR>", {}},
             {"<C-c>pa", ":DeniteProjectDir grep:::!<CR>", {}},
             {"<C-c>pf", ":DeniteProjectDir file/rec<CR>", {}},
         },
