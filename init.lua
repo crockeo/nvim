@@ -3,6 +3,10 @@
 --   * rust tooling:
 --     * sometimes rls disconnects, complaining about neovim LSP misbeahving
 --     * treesitter grammar for rust sometimes bugs out
+--   * figure out how to make this config reproducible:
+--     * identify TRANSITIVE dependencies
+--     * ensure we can either set them up locally or download them online
+--     * test this with a dockerfile?
 
 -- bootstrapping plug :)
 local config_dir = '~/.config/nvim'
