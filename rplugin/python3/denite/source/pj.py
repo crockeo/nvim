@@ -16,7 +16,7 @@ class Source(Base):
         context["project_roots"] = ["~/src", "~/personalsrc"]
 
     def gather_candidates(self, context: UserContext) -> Candidates:
-        args = ["pj", ".git"]
+        args = ["pj", "^\\.git$", "--depth", "1"]
         for root in context.get("project_roots", []):
             args.append(root)
         pj_results = subprocess.run(args, capture_output=True, encoding="utf8")

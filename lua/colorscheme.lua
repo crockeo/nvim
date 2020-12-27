@@ -11,11 +11,6 @@ local hawaii_highlight_red = "#ff4040"
 local hawaii_text = "#ffffff"
 
 -- TODO:
---   * #include directives (purple bold)
---   * const
---   * headers in markdown
---   * std in use std::fs::... in Rust
---   * println! in rust too
 --   * on-hover has a bunch of red for python
 
 local function set_color(category, config)
@@ -91,7 +86,7 @@ local function init()
     set_color("StatusLine", {guifg = hawaii_background_dark, guibg = hawaii_comment})
     set_color("StatusLineNC", {guifg = hawaii_background_dark, guibg = hawaii_comment})
     set_color("Structure", {guifg = hawaii_text, gui = "NONE"})
-    -- TODO: Todo highlighting is broken!!
+    set_color("Title", {guifg = hawaii_highlight_purple})
     set_color("Todo", {guifg = hawaii_highlight_red, guibg = hawaii_background, gui = "bold"})
     set_color("Visual", {guifg = hawaii_background, guibg = hawaii_highlight_orange})
 
@@ -99,6 +94,11 @@ local function init()
     set_color("DiffChange", {guifg = hawaii_highlight_yellow})
     set_color("DiffDelete", {guifg = hawaii_highlight_red})
     set_color("DiffText", {guifg = hawaii_text})
+
+    set_color("SpellErrors", {guifg = hawaii_text})
+
+    set_color("Error", {guifg = hawaii_text, guibg = "NONE"})
+    set_color("ErrorMsg", {guifg = hawaii_text, guibg = "NONE"})
 
     -- TODO: confirmed need this
     -- :hi Cursor guibg=khaki guifg=slategrey
@@ -111,7 +111,6 @@ local function init()
     -- :hi Question guifg=springgreen ctermfg=green
     -- :hi Search guibg=peru guifg=wheat cterm=none ctermfg=grey ctermbg=blue
     -- :hi SpecialKey guifg=yellowgreen ctermfg=darkgreen
-    -- :hi Title guifg=gold gui=bold cterm=bold ctermfg=yellow
     -- :hi WarningMsg guifg=salmon ctermfg=1
     -- :hi Special guifg=darkkhaki ctermfg=brown
     --
@@ -124,13 +123,10 @@ local function init()
     -- :hi Structure guifg=green ctermfg=green
     -- :hi LineNr guifg=grey50 ctermfg=3
     -- :hi Ignore guifg=grey40 cterm=bold ctermfg=7
-    -- :hi Todo guifg=orangered guibg=yellow2
     -- :hi Directory ctermfg=darkcyan
-    -- :hi ErrorMsg cterm=bold guifg=White guibg=Red cterm=bold ctermfg=7 ctermbg=1
     -- :hi VisualNOS cterm=bold,underline
     -- :hi WildMenu ctermfg=0 ctermbg=3
     -- :hi Underlined cterm=underline ctermfg=5
-    -- :hi Error guifg=White guibg=Red cterm=bold ctermfg=7 ctermbg=1
     -- :hi SpellErrors guifg=White guibg=Red cterm=bold ctermfg=7 ctermbg=1
 end
 

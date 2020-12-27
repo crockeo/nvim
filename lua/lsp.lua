@@ -25,7 +25,7 @@ local function init()
     lspconfig.clangd.setup{on_attach = on_attach({hover = true})}
     lspconfig.gopls.setup{}
     lspconfig.pyls_ms.setup{on_attach = on_attach({hover = true})}
-    lspconfig.rls.setup{on_attach = on_attach({hover = true})}
+    lspconfig.rust_analyzer.setup{on_attach = on_attach({hover = true})}
     lspconfig.sumneko_lua.setup{on_attach = on_attach({})}
 
     vim.lsp.set_log_level("info")
