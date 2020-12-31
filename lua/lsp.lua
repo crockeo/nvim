@@ -6,8 +6,6 @@ local function on_attach(config)
         completion.on_attach()
         if config.hover then
             vim.api.nvim_exec([[
-            set updatetime=350
-
             function! LspHover()
                 lua vim.lsp.buf.hover()
             endfunction

@@ -22,7 +22,6 @@ local plug = require('plug')
 plug.start(config_dir .. '/plugs')
     plug.install('neovim/nvim-lspconfig')
     plug.install('nvim-lua/completion-nvim')
-    -- plug.install('nvim-treesitter/nvim-treesitter')
     plug.install('preservim/nerdtree')
     plug.install('Shougo/denite.nvim')
     plug.install('tpope/vim-commentary')
@@ -37,7 +36,6 @@ local sub_configs = {
     'lsp',
     'options',
     'plug_config/denite',
-    'plug_config/treesitter',
 }
 for _, config_name in ipairs(sub_configs) do
     local config = require(config_name)
