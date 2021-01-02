@@ -19,6 +19,7 @@ local function init()
             {'<C-a>', '<Home>', {}},
             {'<C-e>', '<End>', {}},
             {'<C-f>', '<ESC>', {}},
+            {'<C-Space>', '<Plug>(completion_trigger)', {silent = true}},
         },
         n = {
             {'<C-c>c', 'gc<Right>', {}},

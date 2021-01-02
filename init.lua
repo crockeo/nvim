@@ -42,6 +42,10 @@ for _, config_name in ipairs(sub_configs) do
     config.init()
 end
 
+-- TODO: move this to a nicer places, like a languages.lua or a
+-- languages/python.lua
+vim.g.python3_host_prog = '~/.config/nvim/venv/bin/python'
+
 vim.api.nvim_exec([[
 set clipboard+=unnamedplus
 ]], false)
