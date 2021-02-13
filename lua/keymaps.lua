@@ -3,7 +3,7 @@ local config = require('config')
 local function init()
     config.set_keymaps({
         all = {
-            {'<C-a>', '<Home>', {}},
+            {'<C-a>', '^', {}},
             {'<C-c>jg', '<cmd>lua vim.lsp.buf.definition()<CR>', {}},
             {'<C-c>jb', '<C-o>', {}},
             {'<C-e>', '<End>', {}},
@@ -16,7 +16,7 @@ local function init()
             {'<C-g>', '<C-c>', {}},
         },
         i = {
-            {'<C-a>', '<Home>', {}},
+            {'<C-a>', '<ESC>^i', {}},
             {'<C-e>', '<End>', {}},
             {'<C-f>', '<ESC>', {}},
             {'<C-Space>', '<Plug>(completion_trigger)', {silent = true}},
@@ -24,6 +24,7 @@ local function init()
         n = {
             {'<C-c>c', 'gc<Right>', {}},
             {'<C-c>d', ':NERDTreeToggle<CR>', {}},
+            {'<C-c>k', ':bw<CR>', {}},
             {'<C-c>s', '<cmd>lua vim.lsp.buf.formatting()<CR>', {}},
             {'<C-x><C-f>', ':e ', {}},
             {'<C-x>o', '<C-w>w', {}},

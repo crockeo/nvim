@@ -100,6 +100,18 @@ local function init()
     set_color("Error", {guifg = hawaii_text, guibg = "NONE"})
     set_color("ErrorMsg", {guifg = hawaii_text, guibg = "NONE"})
 
+    set_color("TabLine", {guifg = hawaii_text, guibg = hawaii_background})
+    set_color("TabLineFill", {guifg = hawaii_background_dark})
+    set_color("TabLineSel", {guifg=hawaii_text, guibg=hawaii_background_light})
+
+    set_color("Folded", {guifg=hawaii_highlight_purple, guibg=hawaii_background})
+
+    -- crockeo/orgmode-nvim config
+    set_color("OrgTitle", {guifg = hawaii_highlight_green})
+    set_color("SubOrgTitle", {guifg = hawaii_highlight_blue})
+    set_color("SubSubOrgTitle", {guifg = hawaii_highlight_orange})
+    set_color("SubSubSubOrgTitle", {guifg = hawaii_highlight_purple})
+
     -- TODO: confirmed need this
     -- :hi Cursor guibg=khaki guifg=slategrey
     -- :hi VertSplit guibg=#c2bfa5 guifg=grey40 gui=none cterm=reverse
@@ -129,6 +141,9 @@ local function init()
     -- :hi Underlined cterm=underline ctermfg=5
     -- :hi SpellErrors guifg=White guibg=Red cterm=bold ctermfg=7 ctermbg=1
 end
+
+init()
+
 
 return {
     init = init,

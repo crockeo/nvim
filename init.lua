@@ -20,13 +20,17 @@ end
 -- plugs!!
 local plug = require('plug')
 plug.start(config_dir .. '/plugs')
+    plug.install('airblade/vim-gitgutter')
+    plug.install('crockeo/orgmode-nvim')
     plug.install('neovim/nvim-lspconfig')
     plug.install('nvim-lua/completion-nvim')
     plug.install('preservim/nerdtree')
     plug.install('Shougo/denite.nvim')
+    plug.install('tpope/vim-abolish')
     plug.install('tpope/vim-commentary')
     plug.install('tpope/vim-sensible')
     plug.install('tpope/vim-sleuth')
+    plug.install('vimwiki/vimwiki')
 plug.stop()
 
 -- install a bunch of other configs
@@ -45,7 +49,9 @@ end
 -- TODO: move this to a nicer places, like a languages.lua or a
 -- languages/python.lua
 vim.g.python3_host_prog = '~/.config/nvim/venv/bin/python'
+vim.g.vimwiki_folding = 'expr'
 
 vim.api.nvim_exec([[
 set clipboard+=unnamedplus
+autocmd BufWritePre * %s/\s\+$//e
 ]], false)

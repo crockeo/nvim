@@ -15,6 +15,7 @@ local function init()
         number = true,
         termguicolors = true,
         updatetime = 350,
+        writebackup = false,
     })
 end
 
