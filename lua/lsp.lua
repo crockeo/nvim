@@ -6,14 +6,10 @@ local function on_attach(config)
         completion.on_attach()
         if config.hover then
             vim.api.nvim_exec([[
-            function! LspHover()
-                lua vim.lsp.buf.hover()
-            endfunction
-
-            autocmd CursorHold * call LspHover()
-            autocmd CursorHoldI * call LspHover()
-            ]],
-            false)
+autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+            ]], false)
         end
     end
     return _on_attach

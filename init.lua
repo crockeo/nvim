@@ -3,23 +3,13 @@
 --   * rust tooling:
 --     * sometimes rls disconnects, complaining about neovim LSP misbeahving
 --     * treesitter grammar for rust sometimes bugs out
---   * figure out how to make this config reproducible:
---     * identify TRANSITIVE dependencies
---     * ensure we can either set them up locally or download them online
---     * test this with a dockerfile?
 
--- bootstrapping plug :)
-local config_dir = '~/.config/nvim'
-local plug_file = config_dir .. '/autoload/plug.vim'
-
-if vim.fn.filereadable(vim.fn.expand(plug_file)) == 0 then
-    os.execute(config_dir .. '/bootstrap_plug.sh')
-    -- TODO: i think i have to execute something here to load it the first time around
-end
+vim.g.python3_host_prog = '~/.config/nvim/venv/bin/python3'
 
 -- plugs!!
 local plug = require('plug')
-plug.start(config_dir .. '/plugs')
+local plug_dir = vim.fn.expand('~/.config/nvim/plugs')
+plug.start(plug_dir)
     plug.install('airblade/vim-gitgutter')
     plug.install('crockeo/orgmode-nvim')
     plug.install('neovim/nvim-lspconfig')
@@ -32,6 +22,11 @@ plug.start(config_dir .. '/plugs')
     plug.install('tpope/vim-sleuth')
     plug.install('vimwiki/vimwiki')
 plug.stop()
+
+if vim.fn.isdirectory(plug_dir) == 0 then
+    vim.fn.nvim_command('PlugInstall')
+    vim.fn.nvim_command('quit')
+end
 
 -- install a bunch of other configs
 local sub_configs = {
@@ -46,9 +41,6 @@ for _, config_name in ipairs(sub_configs) do
     config.init()
 end
 
--- TODO: move this to a nicer places, like a languages.lua or a
--- languages/python.lua
-vim.g.python3_host_prog = '~/.config/nvim/venv/bin/python'
 vim.g.vimwiki_folding = 'expr'
 
 vim.api.nvim_exec([[
