@@ -1,20 +1,31 @@
 # nvim
 
-Experiments in [neovim](https://neovim.io/) to see if I can get away from Emacs
-now that it freezes on me more than it works. Hopefully I won't bloat my neovim
-config the same way I have my emacs config 🙃
+My neovim config. Meant to be as portable as possible
+so that I can get it set up on new machines ASAP.
 
 ## Installation
 
+Installation requires a couple of dependencies:
+
+* [cURL](https://curl.se/), for downloading [vim-plug](https://github.com/junegunn/vim-plug) and [standalone python builds](https://github.com/indygreg/python-build-standalone)
+* [neovim](https://neovim.io/) >= 0.5
+* (optional) [ag](https://github.com/ggreer/the_silver_searcher), for file- and text-search
+* (optional) [pj](https://github.com/crockeo/pj), for project-search
+
+Although the latter two dependencies are optional,
+failing to install them will often give you ugly errors.
+
 ```bash
+# get the config
+$ git clone --depth=1 https://github.com/crockeo/nvim
 $ mkdir -p ~/.config
+$ mv nvim ~/.config
+
+# install vim-plug and a portable version of python3.9
 $ cd ~/.config
-$ git clone https://github.com/crockeo/nvim
-$ cd nvim
+$ ./bootstrap.sh
 
-# Optional, get the latest version of nvim for fun stuff like OOTB LSP support
-$ ./download_nightly.sh
-
+# installs plugins OOTB
 $ nvim
 ```
 
