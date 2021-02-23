@@ -13,6 +13,7 @@ plug.start(plug_dir)
     plug.install('airblade/vim-gitgutter')
     plug.install('crockeo/orgmode-nvim')
     plug.install('neovim/nvim-lspconfig')
+    plug.install('neoclide/coc.nvim')
     plug.install('nvim-lua/completion-nvim')
     plug.install('preservim/nerdtree')
     plug.install('Shougo/denite.nvim')
@@ -32,7 +33,6 @@ end
 local sub_configs = {
     'colorscheme',
     'keymaps',
-    'lsp',
     'options',
     'plug_config/denite',
 }

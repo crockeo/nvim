@@ -28,7 +28,7 @@ local function set_keymaps(keymaps)
 end
 
 -- set_options sets a bunch of options w/ nvim_set_option using the syntax
--- 
+--
 -- set_options({
 --     option_name = "option value or whatever",
 -- })

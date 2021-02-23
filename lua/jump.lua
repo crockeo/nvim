@@ -12,7 +12,7 @@ end
 local function jump_to_definition()
     vim.api.nvim_command("mark " .. current_stack_mark())
     stack_position = (stack_position + 1) % 26
-    vim.lsp.buf.definition()
+    vim.api.nvim_command("call CocActionAsync('jumpDefinition')")
 end
 
 local function jump_from_definition()
