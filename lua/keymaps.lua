@@ -7,6 +7,7 @@ local function init()
             {'<C-a>', '^', {}},
             {'<C-c>jb', '<cmd> lua require("jump").jump_from_definition()<CR>', {}},
             {'<C-c>jg', '<cmd> lua require("jump").jump_to_definition()<CR>', {}},
+            {'<C-c>jr', 'normal! lua vim.lsp.buf.references()<CR>', {}},
             {'<C-e>', '<End>', {}},
             {'<C-g>', '<ESC>', {}},
             {'<C-x><Left>', ':tabp<CR>', {}},

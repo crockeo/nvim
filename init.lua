@@ -4,7 +4,7 @@
 --     * sometimes rls disconnects, complaining about neovim LSP misbeahving
 --     * treesitter grammar for rust sometimes bugs out
 
-vim.g.python3_host_prog = '~/.config/nvim/venv/bin/python3'
+vim.g.python3_host_prog = vim.fn.expand('~/.config/nvim/venv/bin/python3')
 
 -- plugs!!
 local plug = require('plug')
