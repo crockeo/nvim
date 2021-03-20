@@ -46,6 +46,7 @@ function! s:DeniteFilterSetup() abort
   let b:coc_enabled = 0
 
   imap <silent><buffer><expr> <CR> denite#do_map('do_action')
+  imap <silent><buffer><expr> <C-j> denite#do_map('preview')
   imap <silent><buffer><expr> <Esc> denite#do_map('quit')
 
   imap <silent><buffer> <Up> <C-o>:call <SID>DeniteChoice(0)<CR>

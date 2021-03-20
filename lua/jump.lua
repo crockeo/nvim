@@ -9,10 +9,24 @@ local function current_stack_mark()
     return string.char(stack_position + string.byte('A'))
 end
 
-local function jump_to_definition()
+local function mark_current_pos()
     vim.api.nvim_command("mark " .. current_stack_mark())
     stack_position = (stack_position + 1) % 26
+end
+
+local function jump_to_definition()
+    mark_current_pos()
     vim.api.nvim_command("call CocActionAsync('jumpDefinition')")
+end
+
+local function jump_to_implementation()
+    mark_current_pos()
+    vim.api.nvim_command("call CocActionAsync('jumpImplementation')")
+end
+
+local function jump_to_reference()
+    mark_current_pos()
+    vim.api.nvim_command("call CocActionAsync('jumpReferences')")
 end
 
 local function jump_from_definition()
@@ -23,5 +37,7 @@ end
 
 return {
     jump_to_definition = jump_to_definition,
+    jump_to_implementation = jump_to_implementation,
+    jump_to_reference = jump_to_reference,
     jump_from_definition = jump_from_definition,
 }

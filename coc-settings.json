@@ -5,5 +5,5 @@
     "coc.source.buffer.enable": false,
     "coc.source.file.enable": false,
     "python.jediEnabled": false,
-    "suggest.maxCompleteItemCount": 20
+    "suggest.enablePreselect": true
 }
