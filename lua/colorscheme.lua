@@ -112,6 +112,9 @@ local function init()
     set_color("SubSubOrgTitle", {guifg = hawaii_highlight_orange})
     set_color("SubSubSubOrgTitle", {guifg = hawaii_highlight_purple})
 
+    -- neoclide/coc.nvim config
+    set_color("CocHintSign", {guifg = hawaii_comment})
+
     -- TODO: confirmed need this
     -- :hi Cursor guibg=khaki guifg=slategrey
     -- :hi VertSplit guibg=#c2bfa5 guifg=grey40 gui=none cterm=reverse
