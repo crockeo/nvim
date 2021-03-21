@@ -23,6 +23,7 @@ local function init()
         },
         n = {
             {"<C-c>c", "gc<Right>", {}},
+            {"<C-c>pt", ":YankPytest<CR>", {}},
             {"<C-c>d", ":NERDTreeToggle<CR>", {}},
             {"<C-c>k", ":bw<CR>", {}},
             {"<C-c>s", "<Plug>(coc-format)", {}},
