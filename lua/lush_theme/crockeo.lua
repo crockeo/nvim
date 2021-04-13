@@ -4,9 +4,9 @@ local hsl = lush.hsl
 return lush(function()
     local background = hsl(24, 17, 17)
     local foreground = hsl(0, 100, 100)
+    local comment = hsl(24, 25, 45)
     local background_light = background.lighten(20)
     local background_dark = background.darken(10)
-    local comment = background.lighten(35)
 
     local highlight_red = hsl(0, 100, 70)
     local highlight_yellow = hsl(25, 90, 70)
@@ -23,7 +23,7 @@ return lush(function()
         Pmenu { bg = background_light },
         PmenuSel { fg = background, bg = highlight_yellow },
 
-        StatusLine { fg = background, bg = background_light },
+        StatusLine { fg = background, bg = comment },
         StatusLineNC { fg = StatusLine.fg, bg = StatusLine.bg },
 
         -- Hidden: NonText, SignColumn
