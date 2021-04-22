@@ -4,6 +4,7 @@
     "coc.source.around.enable": false,
     "coc.source.buffer.enable": false,
     "coc.source.file.enable": false,
-    "python.jediEnabled": false,
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "~/.config/nvim/venv/bin/black",
     "suggest.enablePreselect": true
 }

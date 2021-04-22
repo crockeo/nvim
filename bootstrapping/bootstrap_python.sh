@@ -28,5 +28,8 @@ tar -xf python.tar
 
 ./python/install/bin/python3 -m venv ~/.config/nvim/venv
 . ~/.config/nvim/venv/bin/activate
-pip install neovim
+pip install \
+    black==20.8b1 \
+    neovim==0.3.1 \
+    tree-sitter==0.19.0
 deactivate
