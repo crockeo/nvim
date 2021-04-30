@@ -48,7 +48,7 @@ local function set_options(options)
             option_command = option .. '=' .. value
         end
         option_command = ':set ' .. option_command
-        vim.fn.nvim_command(option_command)
+        vim.api.nvim_command(option_command)
     end
 end
 

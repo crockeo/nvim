@@ -27,8 +27,8 @@ plug.start(plug_dir)
 plug.stop()
 
 if vim.fn.isdirectory(plug_dir) == 0 then
-    vim.fn.nvim_command('PlugInstall')
-    vim.fn.nvim_command('quit')
+    vim.api.nvim_command('PlugInstall')
+    vim.api.nvim_command('quit')
 end
 
 -- install a bunch of other configs
