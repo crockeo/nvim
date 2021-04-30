@@ -71,5 +71,24 @@ return lush(function()
         DiffText { fg = foreground, bg = background },
 
         CocHintSign { fg = comment },
+
+        -- this nonsense doesn't actually style anything
+        -- unless you use my patch to do nested fold styles
+        -- https://github.com/crockeo/neovim/pull/1
+        Folded1 { fg = highlight_green },
+        Folded2 { fg = highlight_cyan },
+        Folded3 { fg = highlight_yellow },
+        Folded4 { fg = highlight_magenta },
+
+        VimwikiHeader1 { fg = highlight_green },
+        VimwikiHeader2 { fg = highlight_cyan },
+        VimwikiHeader3 { fg = highlight_yellow },
+        VimwikiHeader4 { fg = highlight_magenta },
+
+        -- https://github.com/crockeo/orgmode-nvim
+        OrgTitle { fg = highlight_green },
+        SubOrgTitle { fg = highlight_cyan },
+        SubSubOrgTitle { fg = highlight_yellow },
+        SubSubSubOrgTitle { fg = highlight_magenta },
     }
 end)
