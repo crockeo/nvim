@@ -49,3 +49,11 @@ vim.api.nvim_exec([[
 set clipboard+=unnamedplus
 autocmd BufWritePre * %s/\s\+$//e
 ]], false)
+
+vim.api.nvim_exec([[
+set wildcharm=<C-Z>
+cnoremap <expr> <up> getcmdline()[:1] is 'e ' && wildmenumode() ? "\<left>" : "\<up>"
+cnoremap <expr> <down> getcmdline()[:1] is 'e ' && wildmenumode() ? "\<right>" : "\<down>"
+cnoremap <expr> <left> getcmdline()[:1] is 'e ' && wildmenumode() ? "\<up>" : "\<left>"
+cnoremap <expr> <right> getcmdline()[:1] is 'e ' && wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+]], false)
