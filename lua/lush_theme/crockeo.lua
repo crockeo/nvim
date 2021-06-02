@@ -40,6 +40,7 @@ return lush(function()
         Error { fg = highlight_red, bg = "NONE" },
         ErrorMsg { fg = highlight_red, bg = "NONE" },
         Todo { fg = highlight_red },
+        CocErrorSign { fg = highlight_red },
 
         String { fg = highlight_yellow },
         Character { fg = highlight_yellow },
