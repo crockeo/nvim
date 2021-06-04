@@ -4,6 +4,8 @@ and taskwiki (https://github.com/tools-life/taskwiki)
 by allowing one to open the note associated with a taskwiki entry.
 """
 
+import json
+import subprocess
 from pathlib import Path
 from typing import cast
 from typing import List
@@ -20,18 +22,22 @@ class Taskn:
 
     @pynvim.command("OpenTaskNote")
     def open_task_note(self) -> None:
-        current_line = self._get_current_line()
-        sha_part = self._get_sha_part(current_line)
-        if sha_part is None:
-            self.nvim.out_write("could not find sha in current line\n")
-            return
+        file_path = cast(str, self.nvim.call("expand", "%@"))
+        if file_path.endswith("home.md"):
+            current_line = self._get_current_line()
+            sha_part = self._get_sha_part(current_line)
+            if sha_part is None:
+                self.nvim.out_write("could not find sha in current line\n")
+                return
 
-        taskn_file = self._find_taskn_file(sha_part)
-        if taskn_file is None:
-            self.nvim.out_write(f"could not find file for sha {sha_part}\n")
-            return
+            taskn_file = self._find_taskn_file(sha_part)
+            if taskn_file is None:
+                self.nvim.out_write(f"could not find file for sha {sha_part}\n")
+                return
 
-        self.nvim.command(f"edit {str(taskn_file)}\n")
+            self.nvim.command(f"edit {str(taskn_file)}\n")
+        else:
+            self.nvim.command(f"edit ~/home.md\n")
 
     @pynvim.function("TasknShaPart", sync=True)
     def taskn_entry(self, _: List[str]) -> Optional[str]:
@@ -60,8 +66,8 @@ class Taskn:
             return fp.readlines()[row]
 
     def _find_taskn_file(self, sha: str) -> Optional[Path]:
-        taskn_dir = Path("~/.taskn").expanduser()
-        for file in taskn_dir.iterdir():
-            if file.name.startswith(sha):
-                return file
-        return None
+        proc = subprocess.run(["task", "export", sha], stdout=subprocess.PIPE)
+        tasks = json.loads(proc.stdout)
+        if len(tasks) != 1:
+            return None
+        return (Path("~/.taskn").expanduser() / tasks[0]["uuid"]).with_suffix(".md")
