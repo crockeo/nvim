@@ -29,6 +29,11 @@ local function jump_to_reference()
     vim.api.nvim_command("call CocActionAsync('jumpReferences')")
 end
 
+local function jump_to_home()
+    mark_current_pos()
+    vim.api.nvim_command("edit ~/home.md")
+end
+
 local function jump_from_definition()
     stack_position = (stack_position - 1) % 26
     vim.api.nvim_command("normal! `" .. current_stack_mark())
@@ -39,5 +44,6 @@ return {
     jump_to_definition = jump_to_definition,
     jump_to_implementation = jump_to_implementation,
     jump_to_reference = jump_to_reference,
+    jump_to_home = jump_to_home,
     jump_from_definition = jump_from_definition,
 }

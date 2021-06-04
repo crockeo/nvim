@@ -23,6 +23,7 @@ plug.start(plug_dir)
     plug.install('tpope/vim-commentary')
     plug.install('tpope/vim-sensible')
     plug.install('tpope/vim-sleuth')
+    plug.install('tools-life/taskwiki')
     plug.install('vimwiki/vimwiki')
 plug.stop()
 

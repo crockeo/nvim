@@ -31,5 +31,7 @@ tar -xf python.tar
 pip install \
     black==20.8b1 \
     neovim==0.3.1 \
+    six==1.16.0 \
+    tasklib==2.3.0 \
     tree-sitter==0.19.0
 deactivate
