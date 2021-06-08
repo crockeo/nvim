@@ -22,8 +22,10 @@ class Taskn:
 
     @pynvim.command("OpenTaskNote")
     def open_task_note(self) -> None:
-        file_path = cast(str, self.nvim.call("expand", "%@"))
-        if file_path.endswith("home.md"):
+        # TODO: modify this so that it makes more sense
+        # in literally any set up other than my own
+        file_path = Path(cast(str, self.nvim.call("expand", "%@")))
+        if file_path.name == "home.md":
             current_line = self._get_current_line()
             sha_part = self._get_sha_part(current_line)
             if sha_part is None:
@@ -36,8 +38,10 @@ class Taskn:
                 return
 
             self.nvim.command(f"edit {str(taskn_file)}\n")
-        else:
+        elif file_path.parent.name == ".taskn":
             self.nvim.command(f"edit ~/home.md\n")
+        else:
+            self.nvim.command(":call vimwiki#base#follow_link('nosplit', 0, 1)\n")
 
     @pynvim.function("TasknShaPart", sync=True)
     def taskn_entry(self, _: List[str]) -> Optional[str]:

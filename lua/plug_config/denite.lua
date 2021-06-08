@@ -24,7 +24,8 @@ local function init()
             {"<C-c>bf", ":Denite buffer<CR>", {}},
             -- this is defined over in rplugin/python3/denite/source/pj.py
             {"<C-c>pp", ":Denite pj<CR>", {}},
-            {"<C-c>pa", ":DeniteProjectDir grep:::!<CR>", {}},
+            {"<C-c>pa", ":DeniteProjectDir grep<CR>", {}},
+            {"<C-c>ps", ":DeniteProjectDir grep:::!<CR>", {}},
             {"<C-c>pf", ":DeniteProjectDir file/rec<CR>", {}},
         },
     })

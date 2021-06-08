@@ -76,6 +76,7 @@ return lush(function()
         -- this nonsense doesn't actually style anything
         -- unless you use my patch to do nested fold styles
         -- https://github.com/crockeo/neovim/pull/1
+        Folded { fg = highlight_green },
         Folded1 { fg = highlight_green },
         Folded2 { fg = highlight_cyan },
         Folded3 { fg = highlight_yellow },
