@@ -40,14 +40,12 @@ local function save_locks(plug_directory, lock_path, needs_lock)
 
     local lock_file = assert(io.open(lock_path, "a"))
     local pwd = execute("pwd")
+    local sha
     for plug in pairs(needs_lock) do
         local author_and_repo = plug:split("/")
         local path = plug_directory .. "/" .. author_and_repo[2]
 
-        os.execute("cd " .. path)
-        local sha = execute("git rev-parse HEAD")
-        os.execute("cd " .. pwd)
-
+        sha = execute("cd " .. path .. " && git rev-parse HEAD")
         lock_file:write(plug .. "=" .. sha)
     end
 end
