@@ -9,8 +9,8 @@ local function stop()
 end
 
 -- 'install' installs a plugin from vim-plug, a la 'Plug "..."'
-local function install(path)
-    vim.fn["plug#"](path)
+local function install(path, sha)
+    vim.fn["plug#"](path, { tag = sha })
 end
 
 return {
