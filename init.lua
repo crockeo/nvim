@@ -29,11 +29,6 @@ plug
     .install('vimwiki/vimwiki')
     .stop()
 
-if vim.fn.isdirectory(plug_dir) == 0 then
-    vim.api.nvim_command('PlugInstall')
-    vim.api.nvim_command('quit')
-end
-
 -- install a bunch of other configs
 local sub_configs = {
     'colorscheme',
