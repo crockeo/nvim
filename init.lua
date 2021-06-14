@@ -1,9 +1,3 @@
--- TODO: feature checklist
---   * multi-pane workflow (have multiple files open at the same time)
---   * rust tooling:
---     * sometimes rls disconnects, complaining about neovim LSP misbeahving
---     * treesitter grammar for rust sometimes bugs out
-
 vim.g.python3_host_prog = vim.fn.expand('~/.config/nvim/venv/bin/python3')
 
 -- plugs!!
@@ -35,6 +29,7 @@ local sub_configs = {
     'keymaps',
     'options',
     'plug_config/denite',
+    'plug_config/treesitter',
 }
 for _, config_name in ipairs(sub_configs) do
     local config = require(config_name)
