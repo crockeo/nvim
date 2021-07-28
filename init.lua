@@ -13,12 +13,10 @@ plug
     .install('preservim/nerdtree')
     .install('rktjmp/lush.nvim')
     .install('saltstack/salt-vim')
-    .install('tools-life/taskwiki')
     .install('tpope/vim-abolish')
     .install('tpope/vim-commentary')
     .install('tpope/vim-sensible')
     .install('tpope/vim-sleuth')
-    .install('vimwiki/vimwiki')
     .stop()
 
 -- install a bunch of other configs
@@ -32,8 +30,6 @@ for _, config_name in ipairs(sub_configs) do
     local config = require(config_name)
     config.init()
 end
-
-vim.g.vimwiki_folding = 'expr'
 
 vim.api.nvim_exec([[
 set clipboard+=unnamedplus

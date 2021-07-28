@@ -82,11 +82,6 @@ return lush(function()
         Folded3 { fg = highlight_yellow },
         Folded4 { fg = highlight_magenta },
 
-        VimwikiHeader1 { fg = highlight_green },
-        VimwikiHeader2 { fg = highlight_cyan },
-        VimwikiHeader3 { fg = highlight_yellow },
-        VimwikiHeader4 { fg = highlight_magenta },
-
         -- https://github.com/crockeo/orgmode-nvim
         OrgTitle { fg = highlight_green },
         SubOrgTitle { fg = highlight_cyan },
