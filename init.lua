@@ -8,13 +8,12 @@ plug
     .install('Shougo/denite.nvim')
     .install('airblade/vim-gitgutter')
     .install('crockeo/find-pytest.nvim')
-    .install('crockeo/orgmode-nvim')
     .install('neoclide/coc.nvim')
     .install('nvim-lua/completion-nvim')
-    .install('nvim-treesitter/nvim-treesitter')
     .install('preservim/nerdtree')
     .install('rktjmp/lush.nvim')
     .install('saltstack/salt-vim')
+    .install('kristijanhusak/orgmode.nvim')
     .install('tools-life/taskwiki')
     .install('tpope/vim-abolish')
     .install('tpope/vim-commentary')
@@ -29,7 +28,6 @@ local sub_configs = {
     'keymaps',
     'options',
     'plug_config/denite',
-    'plug_config/treesitter',
 }
 for _, config_name in ipairs(sub_configs) do
     local config = require(config_name)
