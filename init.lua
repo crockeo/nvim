@@ -13,7 +13,6 @@ plug
     .install('preservim/nerdtree')
     .install('rktjmp/lush.nvim')
     .install('saltstack/salt-vim')
-    .install('kristijanhusak/orgmode.nvim')
     .install('tools-life/taskwiki')
     .install('tpope/vim-abolish')
     .install('tpope/vim-commentary')
