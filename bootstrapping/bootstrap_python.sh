@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 # TODO: bootstrap a python3 installation
 
 base_url="https://github.com/indygreg/python-build-standalone/releases/download/20210103"
@@ -27,8 +29,7 @@ unzstd -f python.tar.zst
 tar -xf python.tar
 
 ./python/install/bin/python3 -m venv ~/.config/nvim/venv
-. ~/.config/nvim/venv/bin/activate
-pip install \
+~/.config/nvim/venv/bin/pip install
     black==20.8b1 \
     neovim==0.3.1 \
     six==1.16.0 \
