@@ -6,7 +6,8 @@ curl \
     --location \
     --create-dirs \
     --output $dir/bin/nvim-macos.tar.gz \
-    https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz
+    https://github.com/neovim/neovim/releases/download/stable/nvim-macos.tar.gz
+
 tar -xf $dir/bin/nvim-macos.tar.gz --directory $dir/bin
 
 if [ -f ~/bin/nvim ]; then
