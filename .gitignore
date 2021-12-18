@@ -1,9 +1,10 @@
+*.pyc
+.bootstrap_sentinel
+.netrwhist
 autoload/
 bin/
 plugs/
-python/
 python.tar
 python.tar.zst
-.bootstrap_sentinel
-.netrwhist
-*.pyc
+python/
+venv/
