@@ -3,6 +3,7 @@ airblade/vim-gitgutter=f4bdaa4e9cf07f62ce1161a3d0ff70c8aad25bc5
 crockeo/find-pytest.nvim=e0cbba8fe6bced8e47499a5701daa5198c940d72
 crockeo/orgmode-nvim=3f02d64981523f42b7c69b7feac17d73c9544363
 neoclide/coc.nvim=17494990ab110b70aec3d7c97707448c6d3e72c9
+neovim/nvim-lspconfig=0f72e5468e510429d5f14b73c93fb528ead1fdaa
 nvim-lua/completion-nvim=8bca7aca91c947031a8f14b038459e35e1755d90
 nvim-lua/plenary.nvim=a672e11c816d4a91ef01253ba1a2567d20e08e55
 nvim-telescope/telescope.nvim=5f37fbfa837dfee7ecd30f388b271f4a71c0a9e0

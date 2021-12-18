@@ -6,7 +6,7 @@ local function init()
         completeopt = 'menuone,noinsert',
         expandtab = true,
         hidden = true,
-        nohlsearch = true,
+        hlsearch = false,
         shiftwidth = 4,
         signcolumn = 'yes',
         smarttab = true,

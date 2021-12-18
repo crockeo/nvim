@@ -14,36 +14,30 @@ local function mark_current_pos()
     stack_position = (stack_position + 1) % 26
 end
 
-local function jump_to_definition()
+local function jump_def()
     mark_current_pos()
-    vim.api.nvim_command("call CocActionAsync('jumpDefinition')")
+    vim.lsp.buf.definition()
 end
 
-local function jump_to_implementation()
+local function jump_impl()
     mark_current_pos()
-    vim.api.nvim_command("call CocActionAsync('jumpImplementation')")
+    vim.lsp.buf.implementation()
 end
 
-local function jump_to_reference()
+local function jump_ref()
     mark_current_pos()
-    vim.api.nvim_command("call CocActionAsync('jumpReferences')")
+    vim.lsp.buf.references()
 end
 
-local function jump_to_home()
-    mark_current_pos()
-    vim.api.nvim_command("edit ~/home.md")
-end
-
-local function jump_from_definition()
+local function jump_back()
     stack_position = (stack_position - 1) % 26
     vim.api.nvim_command("normal! `" .. current_stack_mark())
     vim.api.nvim_command("delmarks " .. current_stack_mark())
 end
 
 return {
-    jump_to_definition = jump_to_definition,
-    jump_to_implementation = jump_to_implementation,
-    jump_to_reference = jump_to_reference,
-    jump_to_home = jump_to_home,
-    jump_from_definition = jump_from_definition,
+    jump_def = jump_def,
+    jump_impl = jump_impl,
+    jump_ref = jump_ref,
+    jump_back = jump_back,
 }

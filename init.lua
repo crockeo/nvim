@@ -7,7 +7,7 @@ plug
     .start(plug_dir)
     .install('airblade/vim-gitgutter')
     .install('crockeo/find-pytest.nvim')
-    .install('neoclide/coc.nvim')
+    .install('neovim/nvim-lspconfig')
     .install('nvim-lua/completion-nvim')
     .install('nvim-lua/plenary.nvim')
     .install('nvim-telescope/telescope.nvim')
@@ -24,6 +24,7 @@ plug
 local sub_configs = {
     'colorscheme',
     'keymaps',
+    'lsp',
     'options',
 }
 for _, config_name in ipairs(sub_configs) do
