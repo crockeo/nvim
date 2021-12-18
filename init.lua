@@ -5,11 +5,12 @@ local plug = require('plug')
 local plug_dir = vim.fn.expand('~/.config/nvim/plugs')
 plug
     .start(plug_dir)
-    .install('Shougo/denite.nvim')
     .install('airblade/vim-gitgutter')
     .install('crockeo/find-pytest.nvim')
     .install('neoclide/coc.nvim')
     .install('nvim-lua/completion-nvim')
+    .install('nvim-lua/plenary.nvim')
+    .install('nvim-telescope/telescope.nvim')
     .install('preservim/nerdtree')
     .install('rktjmp/lush.nvim')
     .install('saltstack/salt-vim')
@@ -24,7 +25,6 @@ local sub_configs = {
     'colorscheme',
     'keymaps',
     'options',
-    'plug_config/denite',
 }
 for _, config_name in ipairs(sub_configs) do
     local config = require(config_name)

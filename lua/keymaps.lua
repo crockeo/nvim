@@ -26,6 +26,9 @@ local function init()
         n = {
             {"<C-c>c", "gc<Right>", {}},
             {"<C-c>pt", ":YankPytest<CR>", {}},
+            {"<C-c>pb", "<cmd>lua require('telescope.builtin').buffers()<cr>", {}},
+            {"<C-c>pf", "<cmd>lua require('telescope.builtin').find_files()<cr>", {}},
+            {"<C-c>pa", "<cmd>lua require('telescope.builtin').live_grep()<cr>", {}},
             {"<C-c>d", ":NERDTreeToggle<CR>", {}},
             {"<C-c>k", ":bw<CR>", {}},
             {"<C-c>s", "<Plug>(coc-format)", {}},
