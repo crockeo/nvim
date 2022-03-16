@@ -75,6 +75,16 @@ _G.packer_plugins = {
     path = "/Users/chillen/.local/share/nvim/site/pack/packer/start/Zenburn",
     url = "https://github.com/jnurmine/Zenburn"
   },
+  ["cmp-nvim-lsp"] = {
+    loaded = true,
+    path = "/Users/chillen/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["cmp-snippy"] = {
+    loaded = true,
+    path = "/Users/chillen/.local/share/nvim/site/pack/packer/start/cmp-snippy",
+    url = "https://github.com/dcampos/cmp-snippy"
+  },
   ["diffview.nvim"] = {
     loaded = true,
     path = "/Users/chillen/.local/share/nvim/site/pack/packer/start/diffview.nvim",
@@ -93,6 +103,24 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/chillen/.local/share/nvim/site/pack/packer/start/neogit",
     url = "https://github.com/TimUntersberger/neogit"
+  },
+  ["nvim-cmp"] = {
+    config = { "\27LJ\2\nF\0\1\4\0\4\0\a6\1\0\0'\3\1\0B\1\2\0029\1\2\0019\3\3\0B\1\2\1K\0\1\0\tbody\19expand_snippet\vsnippy\frequire¯\2\1\0\t\0\20\0%6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0003\4\3\0=\4\5\0035\4\b\0009\5\6\0009\5\a\5B\5\1\2=\5\t\0049\5\6\0009\a\6\0009\a\n\aB\a\1\0025\b\v\0B\5\3\2=\5\f\0049\5\6\0009\5\r\0055\a\14\0B\5\2\2=\5\15\4=\4\6\0039\4\16\0009\4\17\0044\6\3\0005\a\18\0>\a\1\0064\a\3\0005\b\19\0>\b\1\aB\4\3\2=\4\17\3B\1\2\1K\0\1\0\1\0\1\tname\vbuffer\1\0\1\tname\rnvim_lsp\fsources\vconfig\t<CR>\1\0\1\vselect\2\fconfirm\14<C-Space>\1\2\0\0\6i\rcomplete\n<C-g>\1\0\0\nabort\fmapping\vexpand\1\0\0\0\nsetup\bcmp\frequire\0" },
+    load_after = {},
+    loaded = true,
+    needs_bufread = false,
+    path = "/Users/chillen/.local/share/nvim/site/pack/packer/opt/nvim-cmp",
+    url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-lspconfig"] = {
+    after = { "nvim-cmp" },
+    loaded = true,
+    only_config = true
+  },
+  ["nvim-snippy"] = {
+    loaded = true,
+    path = "/Users/chillen/.local/share/nvim/site/pack/packer/start/nvim-snippy",
+    url = "https://github.com/dcampos/nvim-snippy"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -133,18 +161,22 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\nÃ\1\0\0\6\0\v\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\4\0005\2\t\0005\3\b\0005\4\6\0005\5\5\0=\5\a\4=\4\3\3=\3\n\2B\0\2\1K\0\1\0\15extensions\1\0\0\1\0\0\14base_dirs\1\0\0\1\4\0\0\n~/src\19~/src/personal\14~/src/tmp\nsetup\fproject\19load_extension\14telescope\frequire\0", "config", "telescope.nvim")
-time([[Config for telescope.nvim]], false)
--- Config for: Zenburn
-time([[Config for Zenburn]], true)
-try_loadstring("\27LJ\2\nI\0\0\3\0\4\0\0066\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\1K\0\1\0\25:colorscheme zenburn\17nvim_command\bapi\bvim\0", "config", "Zenburn")
-time([[Config for Zenburn]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+try_loadstring("\27LJ\2\nG\0\0\4\0\4\0\b6\0\0\0'\2\1\0B\0\2\0029\1\2\0009\1\3\0014\3\0\0B\1\2\1K\0\1\0\nsetup\fpyright\14lspconfig\frequire\0", "config", "nvim-lspconfig")
+time([[Config for nvim-lspconfig]], false)
 -- Config for: nvim-web-devicons
 time([[Config for nvim-web-devicons]], true)
 try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\22nvim-web-devicons\frequire\0", "config", "nvim-web-devicons")
 time([[Config for nvim-web-devicons]], false)
+-- Config for: Zenburn
+time([[Config for Zenburn]], true)
+try_loadstring("\27LJ\2\nI\0\0\3\0\4\0\0066\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\1K\0\1\0\25:colorscheme zenburn\17nvim_command\bapi\bvim\0", "config", "Zenburn")
+time([[Config for Zenburn]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+try_loadstring("\27LJ\2\nÃ\1\0\0\6\0\v\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\4\0005\2\t\0005\3\b\0005\4\6\0005\5\5\0=\5\a\4=\4\3\3=\3\n\2B\0\2\1K\0\1\0\15extensions\1\0\0\1\0\0\14base_dirs\1\0\0\1\4\0\0\n~/src\19~/src/personal\14~/src/tmp\nsetup\fproject\19load_extension\14telescope\frequire\0", "config", "telescope.nvim")
+time([[Config for telescope.nvim]], false)
 -- Config for: neogit
 time([[Config for neogit]], true)
 try_loadstring("\27LJ\2\n]\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\17integrations\1\0\0\1\0\1\rdiffview\2\nsetup\vneogit\frequire\0", "config", "neogit")
@@ -155,6 +187,11 @@ vim.cmd [[ packadd lualine.nvim ]]
 
 -- Config for: lualine.nvim
 try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\flualine\frequire\0", "config", "lualine.nvim")
+
+vim.cmd [[ packadd nvim-cmp ]]
+
+-- Config for: nvim-cmp
+try_loadstring("\27LJ\2\nF\0\1\4\0\4\0\a6\1\0\0'\3\1\0B\1\2\0029\1\2\0019\3\3\0B\1\2\1K\0\1\0\tbody\19expand_snippet\vsnippy\frequire¯\2\1\0\t\0\20\0%6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0003\4\3\0=\4\5\0035\4\b\0009\5\6\0009\5\a\5B\5\1\2=\5\t\0049\5\6\0009\a\6\0009\a\n\aB\a\1\0025\b\v\0B\5\3\2=\5\f\0049\5\6\0009\5\r\0055\a\14\0B\5\2\2=\5\15\4=\4\6\0039\4\16\0009\4\17\0044\6\3\0005\a\18\0>\a\1\0064\a\3\0005\b\19\0>\b\1\aB\4\3\2=\4\17\3B\1\2\1K\0\1\0\1\0\1\tname\vbuffer\1\0\1\tname\rnvim_lsp\fsources\vconfig\t<CR>\1\0\1\vselect\2\fconfirm\14<C-Space>\1\2\0\0\6i\rcomplete\n<C-g>\1\0\0\nabort\fmapping\vexpand\1\0\0\0\nsetup\bcmp\frequire\0", "config", "nvim-cmp")
 
 time([[Sequenced loading]], false)
 if should_profile then save_profiles() end
