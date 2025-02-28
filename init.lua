@@ -17,10 +17,11 @@ vim.opt.rtp:prepend(lazypath)
 vim.keymap.set("i", "<C-a>", "<Esc>^i")
 vim.keymap.set("i", "<C-e>", "<End>")
 vim.keymap.set("i", "<C-f>", "<Esc>")
-vim.keymap.set("n", "<Space>/", ":FzfLua live_grep<CR>")
-vim.keymap.set("n", "<Space>b", ":FzfLua buffers<CR>")
-vim.keymap.set("n", "<Space>f", ":FzfLua files<CR>")
-vim.keymap.set("n", "<Space>k", vim.lsp.buf.signature_help)
+vim.keymap.set("n", "<leader>/", ":FzfLua live_grep<CR>")
+vim.keymap.set("n", "<leader>b", ":FzfLua buffers<CR>")
+vim.keymap.set("n", "<leader>f", ":FzfLua files<CR>")
+vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover)
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "ga", ":b#<CR>")
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gr", vim.lsp.buf.references)
@@ -50,6 +51,21 @@ set clipboard+=unnamedplus
 -- Install Plugins --
 ---------------------
 require("lazy").setup({
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+  },
   {
     "github/copilot.vim",
   },
@@ -93,7 +109,8 @@ require("lazy").setup({
         filetypes = { "gd", "gdscript" },
       })
       lspconfig.pyright.setup({ capabilities = capabilities })
-      lspconfig.tsserver.setup({
+      lspconfig.rust_analyzer.setup({ capabilities = capabilities })
+      lspconfig.ts_ls.setup({
         filetypes = {
           "javascript",
           "javascriptreact",
@@ -127,7 +144,7 @@ require("lazy").setup({
     "ibhagwan/fzf-lua",
     config = function()
       require("fzf-lua").setup({
-        preview_opts = "hidden",
+        -- preview_opts = "hidden",
       })
     end,
   },
