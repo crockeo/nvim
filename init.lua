@@ -14,6 +14,8 @@ vim.opt.rtp:prepend(lazypath)
 -----------------
 -- Set Keymaps --
 -----------------
+vim.g.mapleader = " "
+
 vim.keymap.set("i", "<C-a>", "<Esc>^i")
 vim.keymap.set("i", "<C-e>", "<End>")
 vim.keymap.set("i", "<C-f>", "<Esc>")
@@ -32,7 +34,6 @@ vim.keymap.set({"n", "v"}, "<C-e>", "<End>")
 -- Set Options --
 -----------------
 vim.cmd("set nohlsearch")
-vim.g.mapleader = " "
 vim.opt.number = true
 vim.opt.numberwidth = 4
 vim.opt.cursorline = true
