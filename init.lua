@@ -212,6 +212,11 @@ require("lazy").setup({
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client or not client.server_capabilities.documentFormattingProvider then
+      return
+    end
+
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = args.buf,
       callback = function()
@@ -221,16 +226,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end
 })
 
--- 
+-- Make hovering open typing information + diagnostic information.
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
-    local line = vim.api.nvim_win_get_cursor(0)[1] - 1 
-    local diagnostics = vim.diagnostic.get(0, { lnum = line })
-    if #diagnostics == 0 then
-      vim.lsp.buf.hover()
+    if not current_line_has_diagnostics() then
+      if lsp_can_hover() then
+        vim.lsp.buf.hover()
+      end
       return
     end
-
     local opts = {
       focusable = false,
       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
@@ -242,3 +246,20 @@ vim.api.nvim_create_autocmd("CursorHold", {
     vim.diagnostic.open_float(nil, opts)
   end
 })
+
+function current_line_has_diagnostics()
+  local line = vim.api.nvim_win_get_cursor(0)[1] - 1 
+  local diagnostics = vim.diagnostic.get(0, { lnum = line })
+  return #diagnostics > 0
+end
+
+function lsp_can_hover()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  for _, client in pairs(clients) do
+    if client.server_capabilities.hoverProvider then
+      return true
+    end
+  end
+  return false
+end
+
