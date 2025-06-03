@@ -34,14 +34,15 @@ vim.keymap.set({"n", "v"}, "<C-e>", "<End>")
 -- Set Options --
 -----------------
 vim.cmd("set nohlsearch")
-vim.opt.number = true
-vim.opt.numberwidth = 4
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
+vim.opt.number = true
+vim.opt.numberwidth = 4
 vim.opt.shiftwidth = 4
+vim.opt.signcolumn = "yes" 
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
-vim.opt.signcolumn = "yes" 
+vim.opt.updatetime = 300
 
 
 vim.cmd([[
@@ -105,12 +106,36 @@ require("lazy").setup({
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
+
+      -- Godot
       lspconfig.gdscript.setup({
         capabilities = capabilities,
         filetypes = { "gd", "gdscript" },
       })
-      lspconfig.pyright.setup({ capabilities = capabilities })
+
+      -- Python
+      lspconfig.basedpyright.setup({
+        capabilities = capabilities,
+        settings = {
+          basedpyright = {
+            autoImportCompletions = true,
+            autoSearchPaths = true,
+            analysis = {
+              typeCheckingMode = "standard",
+              useLibraryCodeForTypes = true,
+            },
+          },
+        },
+      })
+      lspconfig.ruff.setup({ capabilities = capabilities })
+
+      -- Rust
       lspconfig.rust_analyzer.setup({ capabilities = capabilities })
+
+      -- Terraform
+      lspconfig.terraformls.setup({ capabilities = capabilities })
+
+      -- Typescript
       lspconfig.ts_ls.setup({
         filetypes = {
           "javascript",
@@ -152,7 +177,8 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     config = function()
-      require("nvim-treesitter").setup({
+      require("nvim-treesitter.configs").setup({
+        additional_vim_regex_highlighting = false,
         auto_install = true,
         ensure_installed = {
           "c", 
@@ -160,9 +186,11 @@ require("lazy").setup({
           "go",
           "lua",
           "python",
+          "terraform",
           "vim",
         },
         highlight = { enable = true },
+        indent = { enable = true },
       })
     end,
   },
@@ -174,4 +202,43 @@ require("lazy").setup({
     end,
   },
   {"tpope/vim-sleuth"},
+})
+
+-------------------
+-- Custom Config --
+-------------------
+
+-- Sets up format on save.
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("lsp", { clear = true }),
+  callback = function(args)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = args.buf,
+      callback = function()
+        vim.lsp.buf.format {async = false, id = args.data.client_id }
+      end,
+    })
+  end
+})
+
+-- 
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    local line = vim.api.nvim_win_get_cursor(0)[1] - 1 
+    local diagnostics = vim.diagnostic.get(0, { lnum = line })
+    if #diagnostics == 0 then
+      vim.lsp.buf.hover()
+      return
+    end
+
+    local opts = {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = 'rounded',
+      source = 'always',
+      prefix = ' ',
+      scope = 'cursor',
+    }
+    vim.diagnostic.open_float(nil, opts)
+  end
 })
