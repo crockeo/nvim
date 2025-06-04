@@ -1,3 +1,7 @@
+-- Things I feel like I'm missing:
+--
+-- * `<leader>o` to copy the current file name
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -54,6 +58,16 @@ set clipboard+=unnamedplus
 ---------------------
 require("lazy").setup({
   {
+    "catppuccin/nvim", name = "catppuccin",
+    config = function()
+      require("catppuccin").setup({
+        flavour = "macchiato",
+      })
+      vim.cmd.colorscheme("catppuccin")
+    end,
+    priority = 1000,
+  },
+  {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
@@ -67,9 +81,6 @@ require("lazy").setup({
         desc = "Buffer Local Keymaps (which-key)",
       },
     },
-  },
-  {
-    "github/copilot.vim",
   },
   {
     "hrsh7th/nvim-cmp",
@@ -88,7 +99,6 @@ require("lazy").setup({
           ["<Down>"] = cmp.mapping.select_next_item(),
         },
         sources = {
-          { name = "copilot" },
           { name = "nvim_lsp" },
         },
       })
@@ -194,14 +204,33 @@ require("lazy").setup({
       })
     end,
   },
-  {
-    "tanvirtin/monokai.nvim",
-    config = function()
-      local monokai = require("monokai")
-      monokai.setup({ palette = monokai.pro })
-    end,
-  },
   {"tpope/vim-sleuth"},
+  {
+    "yetone/avante.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      -- Optional
+      "ibhagwan/fzf-lua",
+    },
+    event = "VeryLazy",
+    opts = {
+      provider = "claude",
+      providers = {
+        claude = {
+          endpoint = "https://api.anthropic.com",
+          extra_request_body = {
+            max_tokens = 4096,
+            temperature = 0,
+          },
+          model = "claude-sonnet-4-20250514",
+        },
+      },
+    },
+    version = false,
+  },
 })
 
 -------------------
@@ -227,10 +256,40 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- Make hovering open typing information + diagnostic information.
+local function current_line_has_diagnostics()
+  local line = vim.api.nvim_win_get_cursor(0)[1] - 1 
+  local diagnostics = vim.diagnostic.get(0, { lnum = line })
+  return #diagnostics > 0
+end
+
+local function lsp_can_hover()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  for _, client in pairs(clients) do
+    if client.server_capabilities.hoverProvider then
+      return true
+    end
+  end
+  return false
+end
+
+local function hover_window_exists()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local buf_name = vim.api.nvim_buf_get_name(buf)
+    if buf_name:match("^%[LSP%]") or vim.api.nvim_buf_get_option(buf, 'buftype') == 'nofile' then
+      local config = vim.api.nvim_win_get_config(win)
+      if config.relative ~= '' then -- It's a floating window
+        return true
+      end
+    end
+  end
+  return false
+end
+
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
     if not current_line_has_diagnostics() then
-      if lsp_can_hover() then
+      if lsp_can_hover() and not hover_window_exists() then
         vim.lsp.buf.hover()
       end
       return
@@ -246,20 +305,4 @@ vim.api.nvim_create_autocmd("CursorHold", {
     vim.diagnostic.open_float(nil, opts)
   end
 })
-
-function current_line_has_diagnostics()
-  local line = vim.api.nvim_win_get_cursor(0)[1] - 1 
-  local diagnostics = vim.diagnostic.get(0, { lnum = line })
-  return #diagnostics > 0
-end
-
-function lsp_can_hover()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-  for _, client in pairs(clients) do
-    if client.server_capabilities.hoverProvider then
-      return true
-    end
-  end
-  return false
-end
 
