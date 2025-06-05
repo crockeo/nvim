@@ -1,7 +1,3 @@
--- Things I feel like I'm missing:
---
--- * `<leader>o` to copy the current file name
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -15,6 +11,14 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+----------------------
+-- Custom Functions --
+----------------------
+local function copy_filename()
+  local filename = vim.fn.expand("%")
+  vim.fn.setreg("+", filename)
+end
+
 -----------------
 -- Set Keymaps --
 -----------------
@@ -25,8 +29,10 @@ vim.keymap.set("i", "<C-e>", "<End>")
 vim.keymap.set("i", "<C-f>", "<Esc>")
 vim.keymap.set("n", "<leader>/", ":FzfLua live_grep<CR>")
 vim.keymap.set("n", "<leader>b", ":FzfLua buffers<CR>")
+vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>f", ":FzfLua files<CR>")
 vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover)
+vim.keymap.set("n", "<leader>o", copy_filename)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "ga", ":b#<CR>")
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
@@ -95,8 +101,9 @@ require("lazy").setup({
         mapping = {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<CR>"] = cmp.mapping.confirm(),
-          ["<Up>"] = cmp.mapping.select_prev_item(),
           ["<Down>"] = cmp.mapping.select_next_item(),
+          ["<Tab>"] = cmp.mapping.confirm({ select = true }),
+          ["<Up>"] = cmp.mapping.select_prev_item(),
         },
         sources = {
           { name = "nvim_lsp" },
