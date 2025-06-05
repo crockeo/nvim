@@ -32,13 +32,14 @@ vim.keymap.set("n", "<leader>b", ":FzfLua buffers<CR>")
 vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>f", ":FzfLua files<CR>")
 vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover)
-vim.keymap.set("n", "<leader>o", copy_filename)
+vim.keymap.set("n", "<leader>of", copy_filename)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "ga", ":b#<CR>")
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gr", vim.lsp.buf.references)
 vim.keymap.set({"n", "v"}, "<C-a>", "^")
 vim.keymap.set({"n", "v"}, "<C-e>", "<End>")
+vim.keymap.set({"n", "v"}, "<leader>og", "<cmd>GitLink<CR>")
 
 -----------------
 -- Set Options --
@@ -115,6 +116,12 @@ require("lazy").setup({
     "lewis6991/gitsigns.nvim",
     config = function ()
       require("gitsigns").setup()
+    end,
+  },
+  {
+    "linrongbin16/gitlinker.nvim",
+    config = function()
+      require("gitlinker").setup()
     end,
   },
   {
