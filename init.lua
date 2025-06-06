@@ -1,3 +1,11 @@
+-- TODOs:
+-- * Make it so when I swap window (C-w w) and a hover window is open,
+--   I don't move to the hover window.
+--
+-- * Open the type of a function's arguments when I'm typing inside of the parens for a function call.
+--
+-- * Better references pane (when doing `gr`)
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -31,6 +39,7 @@ vim.keymap.set("n", "<leader>/", ":FzfLua live_grep<CR>")
 vim.keymap.set("n", "<leader>b", ":FzfLua buffers<CR>")
 vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>f", ":FzfLua files<CR>")
+vim.keymap.set("n", "<leader>g", ":Neogit<CR>")
 vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover)
 vim.keymap.set("n", "<leader>of", copy_filename)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
@@ -125,6 +134,14 @@ require("lazy").setup({
     end,
   },
   {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "ibhagwan/fzf-lua",
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     dependencies = {"hrsh7th/cmp-nvim-lsp"},
     config = function()
@@ -194,6 +211,13 @@ require("lazy").setup({
     "ibhagwan/fzf-lua",
     config = function()
       require("fzf-lua").setup({
+        winopts = {
+          height = 0.85,
+          width = 0.88,
+          row = 0.35,
+          col = 0.50,
+          border = "rounded",
+        },
         -- preview_opts = "hidden",
       })
     end,
@@ -302,8 +326,11 @@ end
 
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
+    if hover_window_exists() then
+      return
+    end
     if not current_line_has_diagnostics() then
-      if lsp_can_hover() and not hover_window_exists() then
+      if lsp_can_hover() then
         vim.lsp.buf.hover()
       end
       return
