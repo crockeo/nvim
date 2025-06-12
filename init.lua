@@ -1,7 +1,4 @@
 -- TODOs:
--- * Make it so when I swap window (C-w w) and a hover window is open,
---   I don't move to the hover window.
---
 -- * Open the type of a function's arguments when I'm typing inside of the parens for a function call.
 --
 -- * Better references pane (when doing `gr`)
@@ -63,6 +60,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 vim.opt.updatetime = 300
+vim.opt.wrap = false
 
 
 vim.cmd([[
@@ -331,7 +329,10 @@ vim.api.nvim_create_autocmd("CursorHold", {
     end
     if not current_line_has_diagnostics() then
       if lsp_can_hover() then
-        vim.lsp.buf.hover()
+        vim.lsp.buf.hover({
+          border = "rounded",
+          focusable = false,
+        })
       end
       return
     end
