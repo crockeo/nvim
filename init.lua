@@ -2,6 +2,13 @@
 -- * Open the type of a function's arguments when I'm typing inside of the parens for a function call.
 --
 -- * Better references pane (when doing `gr`)
+--
+-- * Make it so [g, ]g, and the other `[]` commands in helix work.
+--   Especially:
+--   - Git diff (mentioned above)
+--   - Diagnostics `[]d`
+--
+-- * Make it so `<leader>'` repeats the last search
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -176,6 +183,11 @@ require("lazy").setup({
         capabilities = capabilities,
       })
 
+      -- OpenSCAD
+      lspconfig.openscad_lsp.setup({
+        capabilities = capabilities,
+      })
+
       -- Python
       lspconfig.basedpyright.setup({
         capabilities = capabilities,
@@ -247,6 +259,22 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     config = function()
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.openscad = {
+        install_info = {
+          url = "https://github.com/bollian/tree-sitter-openscad",
+          files = {"src/parser.c"},
+          branch = "master",
+          generate_requires_npm = false,
+          requires_generate_from_grammar = false,
+        }
+      }
+      vim.filetype.add({
+        extension = {
+          scad = "openscad",
+        },
+      })
+
       require("nvim-treesitter.configs").setup({
         additional_vim_regex_highlighting = false,
         auto_install = true,
@@ -255,6 +283,7 @@ require("lazy").setup({
           "gdscript",
           "go",
           "lua",
+          "openscad",
           "python",
           "terraform",
           "vim",
