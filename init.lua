@@ -24,6 +24,25 @@ local function copy_filename()
   vim.fn.setreg("+", filename)
 end
 
+local function lsp_can_hover()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  for _, client in pairs(clients) do
+    if client.server_capabilities.hoverProvider then
+      return true
+    end
+  end
+  return false
+end
+
+local function lsp_hover()
+  if lsp_can_hover() then
+    vim.lsp.buf.hover({
+      border = "rounded",
+      focusable = false,
+    })
+  end
+end
+
 -----------------
 -- Set Keymaps --
 -----------------
@@ -37,7 +56,7 @@ vim.keymap.set("n", "<leader>b", ":FzfLua buffers<CR>")
 vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>f", ":FzfLua files<CR>")
 vim.keymap.set("n", "<leader>g", ":Neogit<CR>")
-vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover)
+vim.keymap.set("n", "<leader>k", lsp_hover)
 vim.keymap.set("n", "<leader>of", copy_filename)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "ga", ":b#<CR>")
@@ -150,6 +169,11 @@ require("lazy").setup({
       lspconfig.gdscript.setup({
         capabilities = capabilities,
         filetypes = { "gd", "gdscript" },
+      })
+
+      -- Golang
+      lspconfig.gopls.setup({
+        capabilities = capabilities,
       })
 
       -- Python
@@ -298,16 +322,6 @@ local function current_line_has_diagnostics()
   return #diagnostics > 0
 end
 
-local function lsp_can_hover()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-  for _, client in pairs(clients) do
-    if client.server_capabilities.hoverProvider then
-      return true
-    end
-  end
-  return false
-end
-
 local function hover_window_exists()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
@@ -328,12 +342,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
       return
     end
     if not current_line_has_diagnostics() then
-      if lsp_can_hover() then
-        vim.lsp.buf.hover({
-          border = "rounded",
-          focusable = false,
-        })
-      end
+      lsp_hover()
       return
     end
     local opts = {
