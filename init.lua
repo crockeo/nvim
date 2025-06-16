@@ -45,6 +45,7 @@ local function lsp_hover()
   if lsp_can_hover() then
     vim.lsp.buf.hover({
       border = "rounded",
+      focus = false,
       focusable = false,
     })
   end
@@ -81,6 +82,7 @@ vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 vim.opt.number = true
 vim.opt.numberwidth = 4
+vim.opt.scrolloff = 12
 vim.opt.shiftwidth = 4
 vim.opt.signcolumn = "yes" 
 vim.opt.softtabstop = 4
@@ -294,32 +296,33 @@ require("lazy").setup({
     end,
   },
   {"tpope/vim-sleuth"},
-  {
-    "yetone/avante.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      -- Optional
-      "ibhagwan/fzf-lua",
-    },
-    event = "VeryLazy",
-    opts = {
-      provider = "claude",
-      providers = {
-        claude = {
-          endpoint = "https://api.anthropic.com",
-          extra_request_body = {
-            max_tokens = 4096,
-            temperature = 0,
-          },
-          model = "claude-sonnet-4-20250514",
-        },
-      },
-    },
-    version = false,
-  },
+  -- NOTE: Uncomment if in an environment where I can pay for AI :)
+  -- {
+  --   "yetone/avante.nvim",
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "stevearc/dressing.nvim",
+  --     -- Optional
+  --     "ibhagwan/fzf-lua",
+  --   },
+  --   event = "VeryLazy",
+  --   opts = {
+  --     provider = "claude",
+  --     providers = {
+  --       claude = {
+  --         endpoint = "https://api.anthropic.com",
+  --         extra_request_body = {
+  --           max_tokens = 4096,
+  --           temperature = 0,
+  --         },
+  --         model = "claude-sonnet-4-20250514",
+  --       },
+  --     },
+  --   },
+  --   version = false,
+  -- },
 })
 
 -------------------
