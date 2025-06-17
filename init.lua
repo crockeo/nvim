@@ -1,6 +1,3 @@
--- TODOs:
--- * Open the type of a function's arguments when I'm typing inside of the parens for a function call.
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -265,6 +262,16 @@ require("lazy").setup({
         indent = { enable = true },
       })
     end,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "InsertEnter",
+    opts = {
+      bind = true,
+      handler_opts = {
+        border = "rounded"
+      }
+    },
   },
   {"tpope/vim-sleuth"},
   {
