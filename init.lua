@@ -1,7 +1,5 @@
 -- TODOs:
 -- * Open the type of a function's arguments when I'm typing inside of the parens for a function call.
---
--- * Better references pane (when doing `gr`)
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -43,6 +41,10 @@ local function lsp_hover()
   end
 end
 
+local function lsp_references()
+  require("fzf-lua").lsp_references()
+end
+
 -----------------
 -- Set Keymaps --
 -----------------
@@ -61,7 +63,7 @@ vim.keymap.set("n", "<leader>of", copy_filename)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "ga", ":b#<CR>")
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-vim.keymap.set("n", "gr", vim.lsp.buf.references)
+vim.keymap.set("n", "gr", lsp_references)
 vim.keymap.set({"n", "v"}, "<C-a>", "^")
 vim.keymap.set({"n", "v"}, "<C-e>", "<End>")
 vim.keymap.set({"n", "v"}, "<leader>og", "<cmd>GitLink<CR>")
