@@ -1,3 +1,13 @@
+-- TODOs:
+-- * Better references pane (when doing `gr`)
+--
+-- * Make it so [g, ]g, and the other `[]` commands in helix work.
+--   Especially:
+--   - Git diff (mentioned above)
+--   - Diagnostics `[]d`
+--
+-- * Make it so `<leader>'` repeats the last search
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -33,6 +43,7 @@ local function lsp_hover()
   if lsp_can_hover() then
     vim.lsp.buf.hover({
       border = "rounded",
+      focus = false,
       focusable = false,
     })
   end
@@ -73,6 +84,7 @@ vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 vim.opt.number = true
 vim.opt.numberwidth = 4
+vim.opt.scrolloff = 12
 vim.opt.shiftwidth = 4
 vim.opt.signcolumn = "yes" 
 vim.opt.softtabstop = 4
@@ -175,6 +187,11 @@ require("lazy").setup({
         capabilities = capabilities,
       })
 
+      -- OpenSCAD
+      lspconfig.openscad_lsp.setup({
+        capabilities = capabilities,
+      })
+
       -- Python
       lspconfig.basedpyright.setup({
         capabilities = capabilities,
@@ -246,6 +263,22 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     config = function()
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.openscad = {
+        install_info = {
+          url = "https://github.com/bollian/tree-sitter-openscad",
+          files = {"src/parser.c"},
+          branch = "master",
+          generate_requires_npm = false,
+          requires_generate_from_grammar = false,
+        }
+      }
+      vim.filetype.add({
+        extension = {
+          scad = "openscad",
+        },
+      })
+
       require("nvim-treesitter.configs").setup({
         additional_vim_regex_highlighting = false,
         auto_install = true,
@@ -254,6 +287,7 @@ require("lazy").setup({
           "gdscript",
           "go",
           "lua",
+          "openscad",
           "python",
           "terraform",
           "vim",
@@ -274,32 +308,33 @@ require("lazy").setup({
     },
   },
   {"tpope/vim-sleuth"},
-  {
-    "yetone/avante.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      -- Optional
-      "ibhagwan/fzf-lua",
-    },
-    event = "VeryLazy",
-    opts = {
-      provider = "claude",
-      providers = {
-        claude = {
-          endpoint = "https://api.anthropic.com",
-          extra_request_body = {
-            max_tokens = 4096,
-            temperature = 0,
-          },
-          model = "claude-sonnet-4-20250514",
-        },
-      },
-    },
-    version = false,
-  },
+  -- NOTE: Uncomment if in an environment where I can pay for AI :)
+  -- {
+  --   "yetone/avante.nvim",
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "stevearc/dressing.nvim",
+  --     -- Optional
+  --     "ibhagwan/fzf-lua",
+  --   },
+  --   event = "VeryLazy",
+  --   opts = {
+  --     provider = "claude",
+  --     providers = {
+  --       claude = {
+  --         endpoint = "https://api.anthropic.com",
+  --         extra_request_body = {
+  --           max_tokens = 4096,
+  --           temperature = 0,
+  --         },
+  --         model = "claude-sonnet-4-20250514",
+  --       },
+  --     },
+  --   },
+  --   version = false,
+  -- },
 })
 
 -------------------
