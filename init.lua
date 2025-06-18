@@ -71,7 +71,7 @@ vim.keymap.set("n", "<leader>of", copy_filename)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "ga", ":b#<CR>")
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-vim.keymap.set("n", "gr", lsp_references)
+vim.keymap.set("n", "gr", lsp_references, { nowait = true })
 vim.keymap.set({"n", "v"}, "<C-a>", "^")
 vim.keymap.set({"n", "v"}, "<C-e>", "<End>")
 vim.keymap.set({"n", "v"}, "<leader>og", "<cmd>GitLink<CR>")
@@ -257,6 +257,9 @@ require("lazy").setup({
           border = "rounded",
         },
         -- preview_opts = "hidden",
+        grep = {
+          cmd = "rg --column --line-number --no-heading --color=always --smart-case --hidden --glob '!.git/'",
+        },
       })
     end,
   },
