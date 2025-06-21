@@ -208,6 +208,15 @@ require("lazy").setup({
       })
       lspconfig.ruff.setup({ capabilities = capabilities })
 
+      -- Ruby
+      lspconfig.ruby_lsp.setup({
+        capabilities = capabilities,
+        init_options = {
+          formatter = 'standard',
+          linters = { 'standard' },
+        },
+      })
+
       -- Rust
       lspconfig.rust_analyzer.setup({ capabilities = capabilities })
 
