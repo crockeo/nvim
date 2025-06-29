@@ -334,6 +334,7 @@ require("lazy").setup({
       }
     },
   },
+  {"stevearc/dressing.nvim"},
   {"tpope/vim-sleuth"},
   -- NOTE: Uncomment if in an environment where I can pay for AI :)
   -- {
