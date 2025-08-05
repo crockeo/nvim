@@ -280,6 +280,21 @@ require("lazy").setup({
           "typescript.tsx",
         },
       })
+
+      -- Web
+      lspconfig.biome.setup({
+        capabilities = capabilities,
+        filetypes = {
+          "css",
+          "html",
+          "javascript",
+          "javascript.jsx",
+          "javascriptreact",
+          "typescript",
+          "typescript.tsx",
+          "typescriptreact",
+        },
+      })
     end,
     init = function()
       vim.g.coq_settings = {
