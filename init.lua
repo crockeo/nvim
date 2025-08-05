@@ -53,6 +53,21 @@ local function lsp_references()
   require("fzf-lua").lsp_references()
 end
 
+local function open(argument)
+  os.execute(string.format("open %s", argument))
+end
+
+function open_pr_url()
+  local git = require("neogit.lib.git")
+  local origin_url = git.remote.get_url("origin")[1]
+  local branch_name = git.branch.current()
+
+  origin_url = string.gsub(origin_url, ":", "/", 1)
+  origin_url = string.gsub(origin_url, "git@", "https://")
+  local compare_url = string.format("%s/compare/%s?expand=1", origin_url, branch_name)
+  open(compare_url)
+end
+
 -----------------
 -- Set Keymaps --
 -----------------
@@ -61,6 +76,7 @@ vim.g.mapleader = " "
 vim.keymap.set("i", "<C-a>", "<Esc>^i")
 vim.keymap.set("i", "<C-e>", "<End>")
 vim.keymap.set("i", "<C-f>", "<Esc>")
+vim.keymap.set("n", "<leader>'", ":FzfLua resume<CR>")
 vim.keymap.set("n", "<leader>/", ":FzfLua live_grep<CR>")
 vim.keymap.set("n", "<leader>b", ":FzfLua buffers<CR>")
 vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action)
@@ -72,9 +88,9 @@ vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "ga", ":b#<CR>")
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gr", lsp_references, { nowait = true })
-vim.keymap.set({"n", "v"}, "<C-a>", "^")
-vim.keymap.set({"n", "v"}, "<C-e>", "<End>")
-vim.keymap.set({"n", "v"}, "<leader>og", "<cmd>GitLink<CR>")
+vim.keymap.set({ "n", "v" }, "<C-a>", "^")
+vim.keymap.set({ "n", "v" }, "<C-e>", "<End>")
+vim.keymap.set({ "n", "v" }, "<leader>og", "<cmd>GitLink<CR>")
 
 -----------------
 -- Set Options --
@@ -86,7 +102,7 @@ vim.opt.number = true
 vim.opt.numberwidth = 4
 vim.opt.scrolloff = 12
 vim.opt.shiftwidth = 4
-vim.opt.signcolumn = "yes" 
+vim.opt.signcolumn = "yes"
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 vim.opt.updatetime = 300
@@ -102,7 +118,8 @@ set clipboard+=unnamedplus
 ---------------------
 require("lazy").setup({
   {
-    "catppuccin/nvim", name = "catppuccin",
+    "catppuccin/nvim",
+    name = "catppuccin",
     config = function()
       require("catppuccin").setup({
         flavour = "macchiato",
@@ -110,6 +127,17 @@ require("lazy").setup({
       vim.cmd.colorscheme("catppuccin")
     end,
     priority = 1000,
+  },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      -- library = {
+      --   -- See the configuration section for more details
+      --   -- Load luvit types when the `vim.uv` word is found
+      --   { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      -- },
+    },
   },
   {
     "folke/which-key.nvim",
@@ -151,7 +179,7 @@ require("lazy").setup({
   },
   {
     "lewis6991/gitsigns.nvim",
-    config = function ()
+    config = function()
       require("gitsigns").setup()
     end,
   },
@@ -168,13 +196,26 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
     },
+    config = function()
+      local neogit = require("neogit")
+      neogit.setup({
+        mappings = {
+          status = {
+            ["h"] = open_pr_url,
+          }
+        }
+      })
+    end,
   },
   {
     "neovim/nvim-lspconfig",
-    dependencies = {"hrsh7th/cmp-nvim-lsp"},
+    dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
+
+      -- Gleam
+      lspconfig.gleam.setup({ capabilities = capabilities })
 
       -- Godot
       lspconfig.gdscript.setup({
@@ -192,20 +233,13 @@ require("lazy").setup({
         capabilities = capabilities,
       })
 
-      -- Python
-      lspconfig.basedpyright.setup({
+      -- Lua
+      lspconfig.lua_ls.setup({
         capabilities = capabilities,
-        settings = {
-          basedpyright = {
-            autoImportCompletions = true,
-            autoSearchPaths = true,
-            analysis = {
-              typeCheckingMode = "standard",
-              useLibraryCodeForTypes = true,
-            },
-          },
-        },
       })
+
+      -- Python
+      lspconfig.pyright.setup({ capabilities = capabilities })
       lspconfig.ruff.setup({ capabilities = capabilities })
 
       -- Ruby
@@ -224,7 +258,19 @@ require("lazy").setup({
       lspconfig.terraformls.setup({ capabilities = capabilities })
 
       -- Typescript
+      lspconfig.biome.setup({
+        capabilities = capabilities,
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "javascript.jsx",
+          "typescript",
+          "typescriptreact",
+          "typescript.tsx",
+        },
+      })
       lspconfig.ts_ls.setup({
+        capabilities = capabilities,
         filetypes = {
           "javascript",
           "javascriptreact",
@@ -267,7 +313,12 @@ require("lazy").setup({
         },
         -- preview_opts = "hidden",
         grep = {
-          cmd = "rg --column --line-number --no-heading --color=always --smart-case --hidden --glob '!.git/'",
+          cmd = "rg --column --line-number --no-heading --color=always --smart-case --hidden --glob '!.git/' --",
+        },
+        keymap = {
+          builtin = {
+            ["<Esc>"] = "hide",
+          },
         },
       })
     end,
@@ -279,7 +330,7 @@ require("lazy").setup({
       parser_config.openscad = {
         install_info = {
           url = "https://github.com/bollian/tree-sitter-openscad",
-          files = {"src/parser.c"},
+          files = { "src/parser.c" },
           branch = "master",
           generate_requires_npm = false,
           requires_generate_from_grammar = false,
@@ -295,7 +346,7 @@ require("lazy").setup({
         additional_vim_regex_highlighting = false,
         auto_install = true,
         ensure_installed = {
-          "c", 
+          "c",
           "gdscript",
           "go",
           "lua",
@@ -319,8 +370,14 @@ require("lazy").setup({
       }
     },
   },
-  {"stevearc/dressing.nvim"},
-  {"tpope/vim-sleuth"},
+  { "stevearc/dressing.nvim" },
+  {
+    "stevearc/oil.nvim",
+    config = function()
+      require("oil").setup()
+    end,
+  },
+  { "tpope/vim-sleuth" },
   -- NOTE: Uncomment if in an environment where I can pay for AI :)
   -- {
   --   "yetone/avante.nvim",
@@ -366,7 +423,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = args.buf,
       callback = function()
-        vim.lsp.buf.format {async = false, id = args.data.client_id }
+        vim.lsp.buf.format { async = false, id = args.data.client_id }
       end,
     })
   end
@@ -374,7 +431,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Make hovering open typing information + diagnostic information.
 local function current_line_has_diagnostics()
-  local line = vim.api.nvim_win_get_cursor(0)[1] - 1 
+  local line = vim.api.nvim_win_get_cursor(0)[1] - 1
   local diagnostics = vim.diagnostic.get(0, { lnum = line })
   return #diagnostics > 0
 end
@@ -413,4 +470,3 @@ vim.api.nvim_create_autocmd("CursorHold", {
     vim.diagnostic.open_float(nil, opts)
   end
 })
-
