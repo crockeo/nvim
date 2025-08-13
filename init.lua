@@ -371,6 +371,26 @@ require("lazy").setup({
       }
     },
   },
+  {
+    "stevearc/conform.nvim",
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          css = { "biome" },
+          python = { "ruff" },
+          javascript = { "biome" },
+          javascriptreact = { "biome" },
+          json = { "biome" },
+          typescript = { "biome" },
+          typescriptreact = { "biome" },
+        },
+        format_on_save == {
+          timeout_ms = 500,
+          lsp_fallback = true,
+        },
+      })
+    end,
+  },
   { "stevearc/dressing.nvim" },
   {
     "stevearc/oil.nvim",
@@ -413,21 +433,11 @@ require("lazy").setup({
 -------------------
 
 -- Sets up format on save.
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("lsp", { clear = true }),
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
   callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if not client or not client.server_capabilities.documentFormattingProvider then
-      return
-    end
-
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = args.buf,
-      callback = function()
-        vim.lsp.buf.format { async = false, id = args.data.client_id }
-      end,
-    })
-  end
+    require("conform").format({ bufnr = args.buf })
+  end,
 })
 
 -- Make hovering open typing information + diagnostic information.
