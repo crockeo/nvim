@@ -99,11 +99,13 @@ vim.keymap.set({ "n", "v" }, "<leader>og", "<cmd>GitLink<CR>")
 vim.cmd("set nohlsearch")
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
+vim.opt.ignorecase = true
 vim.opt.number = true
 vim.opt.numberwidth = 4
 vim.opt.scrolloff = 12
 vim.opt.shiftwidth = 4
 vim.opt.signcolumn = "yes"
+vim.opt.smartcase = true
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 vim.opt.updatetime = 300
