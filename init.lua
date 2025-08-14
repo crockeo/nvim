@@ -242,8 +242,17 @@ require("lazy").setup({
       })
 
       -- Python
-      lspconfig.pyright.setup({ capabilities = capabilities })
+      -- lspconfig.pyright.setup({ capabilities = capabilities })
       lspconfig.ruff.setup({ capabilities = capabilities })
+
+      -- Uncomment if you want to use `ty` as the LSP for Python.
+      vim.lsp.config["ty"] = {
+        cmd = { "ty", "server" },
+        capabilities = capabilities,
+        filetypes = { "python" },
+        root_markers = { "pyproject.toml", "setup.cfg", "setup.py", "uv.lock", ".git" },
+      }
+      vim.lsp.enable("ty")
 
       -- Ruby
       lspconfig.ruby_lsp.setup({
