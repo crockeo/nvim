@@ -292,6 +292,9 @@ require("lazy").setup({
           "typescript.tsx",
         },
       })
+
+      -- Zig
+      lspconfig.zls.setup({ capabilities = capabilities })
     end,
     init = function()
       vim.g.coq_settings = {
