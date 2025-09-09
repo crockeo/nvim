@@ -391,14 +391,15 @@ require("lazy").setup({
       require("conform").setup({
         formatters_by_ft = {
           css = { "biome" },
-          python = { "ruff" },
+          python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
           javascript = { "biome" },
           javascriptreact = { "biome" },
           json = { "biome" },
           typescript = { "biome" },
           typescriptreact = { "biome" },
         },
-        format_on_save = {
+        format_after_save = {
+          async = true,
           timeout_ms = 500,
           lsp_fallback = true,
         },
@@ -445,14 +446,6 @@ require("lazy").setup({
 -------------------
 -- Custom Config --
 -------------------
-
--- Sets up format on save.
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    require("conform").format({ bufnr = args.buf })
-  end,
-})
 
 -- Make hovering open typing information + diagnostic information.
 local function current_line_has_diagnostics()
