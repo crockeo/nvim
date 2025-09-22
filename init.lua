@@ -43,6 +43,7 @@ local function lsp_hover()
   if lsp_can_hover() then
     vim.lsp.buf.hover({
       border = "rounded",
+      close_events = {"CursorMoved", "BufLeave", "WinLeave"},
       focus = false,
       focusable = false,
     })
