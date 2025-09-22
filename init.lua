@@ -389,20 +389,20 @@ require("lazy").setup({
   {
     "stevearc/conform.nvim",
     config = function()
+      local web_formatters = { "biome", "biome-check", "biome-organize-imports" };
       require("conform").setup({
         formatters_by_ft = {
-          css = { "biome" },
+          css = web_formatters,
+          javascript = web_formatters,
+          javascriptreact = web_formatters,
+          json = web_formatters,
           python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
-          javascript = { "biome" },
-          javascriptreact = { "biome" },
-          json = { "biome" },
-          typescript = { "biome" },
-          typescriptreact = { "biome" },
+          typescript = web_formatters,
+          typescriptreact = web_formatters,
         },
         format_after_save = {
           async = true,
           timeout_ms = 500,
-          lsp_fallback = true,
         },
       })
     end,
