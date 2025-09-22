@@ -243,17 +243,17 @@ require("lazy").setup({
       })
 
       -- Python
-      -- lspconfig.pyright.setup({ capabilities = capabilities })
+      lspconfig.pyright.setup({ capabilities = capabilities })
       lspconfig.ruff.setup({ capabilities = capabilities })
 
       -- Uncomment if you want to use `ty` as the LSP for Python.
-      vim.lsp.config["ty"] = {
-        cmd = { "ty", "server" },
-        capabilities = capabilities,
-        filetypes = { "python" },
-        root_markers = { "pyproject.toml", "setup.cfg", "setup.py", "uv.lock", ".git" },
-      }
-      vim.lsp.enable("ty")
+      -- vim.lsp.config["ty"] = {
+      --   cmd = { "ty", "server" },
+      --   capabilities = capabilities,
+      --   filetypes = { "python" },
+      --   root_markers = { "pyproject.toml", "setup.cfg", "setup.py", "uv.lock", ".git" },
+      -- }
+      -- vim.lsp.enable("ty")
 
       -- Ruby
       lspconfig.ruby_lsp.setup({
@@ -392,14 +392,15 @@ require("lazy").setup({
       require("conform").setup({
         formatters_by_ft = {
           css = { "biome" },
-          python = { "ruff" },
+          python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
           javascript = { "biome" },
           javascriptreact = { "biome" },
           json = { "biome" },
           typescript = { "biome" },
           typescriptreact = { "biome" },
         },
-        format_on_save == {
+        format_after_save = {
+          async = true,
           timeout_ms = 500,
           lsp_fallback = true,
         },
@@ -446,14 +447,6 @@ require("lazy").setup({
 -------------------
 -- Custom Config --
 -------------------
-
--- Sets up format on save.
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    require("conform").format({ bufnr = args.buf })
-  end,
-})
 
 -- Make hovering open typing information + diagnostic information.
 local function current_line_has_diagnostics()
