@@ -1,12 +1,8 @@
 -- TODOs:
--- * Better references pane (when doing `gr`)
---
 -- * Make it so [g, ]g, and the other `[]` commands in helix work.
 --   Especially:
 --   - Git diff (mentioned above)
 --   - Diagnostics `[]d`
---
--- * Make it so `<leader>'` repeats the last search
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
