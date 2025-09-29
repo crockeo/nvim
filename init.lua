@@ -375,6 +375,7 @@ require("lazy").setup({
           python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
           typescript = web_formatters,
           typescriptreact = web_formatters,
+          zig = { "zigfmt" },
         },
         format_after_save = {
           async = true,
