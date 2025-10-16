@@ -313,6 +313,9 @@ require("lazy").setup({
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
     config = function()
       local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
       parser_config.openscad = {
@@ -345,6 +348,18 @@ require("lazy").setup({
         },
         highlight = { enable = true },
         indent = { enable = true },
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              ["ac"] = "@class.outer",
+              ["af"] = "@function.outer",
+              ["ic"] = "@class.inner",
+              ["if"] = "@function.inner",
+            },
+          },
+        },
       })
     end,
   },
@@ -373,8 +388,7 @@ require("lazy").setup({
           typescriptreact = web_formatters,
           zig = { "zigfmt" },
         },
-        format_after_save = {
-          async = true,
+        format_on_save = {
           timeout_ms = 500,
         },
       })
