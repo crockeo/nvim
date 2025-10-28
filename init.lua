@@ -21,7 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Custom Functions --
 ----------------------
 local function copy_filename()
-  local filename = vim.fn.expand("%")
+  local filename = vim.fn.expand("%:.")
   vim.fn.setreg("+", filename)
 end
 
@@ -235,6 +235,9 @@ require("lazy").setup({
       -- Python
       vim.lsp.config("pyright", { capabilities = capabilities })
       vim.lsp.enable("pyright")
+
+      -- vim.lsp.config("ty", { capabilities = capabilities })
+      -- vim.lsp.enable("ty")
 
       vim.lsp.config("ruff", { capabilities = capabilities })
       vim.lsp.enable("ruff")
