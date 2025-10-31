@@ -25,6 +25,14 @@ local function copy_filename()
   vim.fn.setreg("+", filename)
 end
 
+local function copy_python_module()
+  local filename = vim.fn.expand("%:.")
+  local module = filename:gsub("%.py$", "")
+  module = module:gsub("/", ".")
+  module = module:gsub("%.__init__$", "")
+  vim.fn.setreg("+", module)
+end
+
 local function lsp_can_hover()
   local clients = vim.lsp.get_clients({ bufnr = 0 })
   for _, client in pairs(clients) do
@@ -81,6 +89,7 @@ vim.keymap.set("n", "<leader>f", ":FzfLua files<CR>")
 vim.keymap.set("n", "<leader>g", ":Neogit<CR>")
 vim.keymap.set("n", "<leader>k", lsp_hover)
 vim.keymap.set("n", "<leader>of", copy_filename)
+vim.keymap.set("n", "<leader>om", copy_python_module)
 vim.keymap.set("n", "<leader>oo", ":Oil %:h<CR>")
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "ga", ":b#<CR>")
