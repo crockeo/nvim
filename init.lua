@@ -127,6 +127,16 @@ set clipboard+=unnamedplus
 ---------------------
 require("lazy").setup({
   {
+    "andrewferrier/wrapping.nvim",
+    config = function()
+      require("wrapping").setup({
+        softener = {
+          markdown = true,
+        }
+      })
+    end,
+  },
+  {
     "catppuccin/nvim",
     name = "catppuccin",
     config = function()
