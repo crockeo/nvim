@@ -311,6 +311,21 @@ require("lazy").setup({
     end,
   },
   {
+    "shortcuts/no-neck-pain.nvim",
+    config = function()
+      require("no-neck-pain").setup({
+        width = 100,
+      })
+      vim.keymap.set("n", "<leader>l", ":NoNeckPain<CR>", { desc = "Toggle No Neck Pain" })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "markdown",
+        callback = function()
+          vim.cmd("NoNeckPain")
+        end,
+      })
+    end,
+  },
+  {
     "ibhagwan/fzf-lua",
     config = function()
       require("fzf-lua").setup({
@@ -406,6 +421,8 @@ require("lazy").setup({
           javascriptreact = web_formatters,
           json = web_formatters,
           python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
+          rust = { "rustfmt" },
+          terraform = { "terraform_fmt" },
           typescript = web_formatters,
           typescriptreact = web_formatters,
           zig = { "zigfmt" },
