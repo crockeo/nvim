@@ -192,6 +192,7 @@ require("lazy").setup({
         },
         sources = {
           { name = "nvim_lsp" },
+          { name = "path" },
         },
       })
     end,
@@ -314,15 +315,9 @@ require("lazy").setup({
     "shortcuts/no-neck-pain.nvim",
     config = function()
       require("no-neck-pain").setup({
-        width = 100,
+        width = 120,
       })
       vim.keymap.set("n", "<leader>l", ":NoNeckPain<CR>", { desc = "Toggle No Neck Pain" })
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "markdown",
-        callback = function()
-          vim.cmd("NoNeckPain")
-        end,
-      })
     end,
   },
   {
