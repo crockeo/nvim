@@ -20,6 +20,11 @@ vim.opt.rtp:prepend(lazypath)
 ----------------------
 -- Custom Functions --
 ----------------------
+local function copy_directory()
+  local dir = vim.fn.expand("%:.:h")
+  vim.fn.setreg("+", dir)
+end
+
 local function copy_filename()
   local filename = vim.fn.expand("%:.")
   vim.fn.setreg("+", filename)
@@ -88,6 +93,7 @@ vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>f", ":FzfLua files<CR>")
 vim.keymap.set("n", "<leader>g", ":Neogit<CR>")
 vim.keymap.set("n", "<leader>k", lsp_hover)
+vim.keymap.set("n", "<leader>od", copy_directory)
 vim.keymap.set("n", "<leader>of", copy_filename)
 vim.keymap.set("n", "<leader>om", copy_python_module)
 vim.keymap.set("n", "<leader>oo", ":Oil %:h<CR>")
