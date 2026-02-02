@@ -438,7 +438,13 @@ require("lazy").setup({
   {
     "stevearc/oil.nvim",
     config = function()
-      require("oil").setup()
+      require("oil").setup({
+        skip_confirm_for_simple_edits = true,
+        watch_for_changes = false,
+        lsp_file_methods = {
+          timeout_ms = 0,
+        },
+      })
     end,
   },
   { "tpope/vim-sleuth" },
