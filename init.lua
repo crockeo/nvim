@@ -438,12 +438,12 @@ require("lazy").setup({
   {
     "stevearc/oil.nvim",
     config = function()
-      require("oil").setup({
-        skip_confirm_for_simple_edits = true,
-        watch_for_changes = false,
-        lsp_file_methods = {
-          timeout_ms = 0,
-        },
+      require("oil").setup()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "oil",
+        callback = function()
+          vim.opt_local.timeoutlen = 0
+        end,
       })
     end,
   },
