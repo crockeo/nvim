@@ -67,7 +67,7 @@ local function open(argument)
   os.execute(string.format("open %s", argument))
 end
 
-function open_pr_url()
+local function open_pr_url()
   local git = require("neogit.lib.git")
   local origin_url = git.remote.get_url("origin")[1]
   local branch_name = git.branch.current()
@@ -76,6 +76,30 @@ function open_pr_url()
   origin_url = string.gsub(origin_url, "git@", "https://")
   local compare_url = string.format("%s/compare/%s?expand=1", origin_url, branch_name)
   open(compare_url)
+end
+
+local function treesitter_hook(args)
+  local lang = vim.treesitter.language.get_lang(args.match) or args.match
+
+  local function start()
+    if vim.api.nvim_buf_is_valid(args.buf) and vim.treesitter.language.add(lang) then
+      vim.treesitter.start(args.buf, lang)
+      vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
+  end
+
+  if vim.list_contains(require("nvim-treesitter.config").get_installed(), lang) then
+    start()
+    return
+  end
+  if not vim.list_contains(require("nvim-treesitter.config").get_available(), lang) then
+    return
+  end
+  require("nvim-treesitter").install(lang):await(function(err)
+    if not err then
+      vim.schedule(start)
+    end
+  end)
 end
 
 -----------------
@@ -348,54 +372,39 @@ require("lazy").setup({
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
+    build = ":TSUpdate",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        branch = "main",
+        init = function()
+          vim.g.no_plugin_maps = true
+        end,
+      },
     },
     config = function()
-      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-      parser_config.openscad = {
-        install_info = {
-          url = "https://github.com/bollian/tree-sitter-openscad",
-          files = { "src/parser.c" },
-          branch = "master",
-          generate_requires_npm = false,
-          requires_generate_from_grammar = false,
-        }
-      }
-      vim.filetype.add({
-        extension = {
-          scad = "openscad",
+      vim.api.nvim_create_autocmd("FileType", { callback = treesitter_hook })
+
+      require("nvim-treesitter-textobjects").setup({
+        select = {
+          lookahead = true,
         },
       })
 
-      require("nvim-treesitter.configs").setup({
-        additional_vim_regex_highlighting = false,
-        auto_install = true,
-        ensure_installed = {
-          "c",
-          "gdscript",
-          "go",
-          "lua",
-          "openscad",
-          "python",
-          "terraform",
-          "vim",
-        },
-        highlight = { enable = true },
-        indent = { enable = true },
-        textobjects = {
-          select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-              ["ac"] = "@class.outer",
-              ["af"] = "@function.outer",
-              ["ic"] = "@class.inner",
-              ["if"] = "@function.inner",
-            },
-          },
-        },
-      })
+      local select = require("nvim-treesitter-textobjects.select")
+      for lhs, capture in pairs({
+          af = "@function.outer",
+          ["if"] = "@function.inner",
+          ac = "@class.outer",
+          ic = "@class.inner",
+        })
+      do
+        vim.keymap.set({ "x", "o" }, lhs, function()
+          select.select_textobject(capture, "textobjects")
+        end)
+      end
     end,
   },
   {
@@ -445,33 +454,6 @@ require("lazy").setup({
     end,
   },
   { "tpope/vim-sleuth" },
-  -- NOTE: Uncomment if in an environment where I can pay for AI :)
-  -- {
-  --   "yetone/avante.nvim",
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "stevearc/dressing.nvim",
-  --     -- Optional
-  --     "ibhagwan/fzf-lua",
-  --   },
-  --   event = "VeryLazy",
-  --   opts = {
-  --     provider = "claude",
-  --     providers = {
-  --       claude = {
-  --         endpoint = "https://api.anthropic.com",
-  --         extra_request_body = {
-  --           max_tokens = 4096,
-  --           temperature = 0,
-  --         },
-  --         model = "claude-sonnet-4-20250514",
-  --       },
-  --     },
-  --   },
-  --   version = false,
-  -- },
 })
 
 -------------------
