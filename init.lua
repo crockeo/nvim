@@ -263,43 +263,15 @@ require("lazy").setup({
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+      vim.lsp.config("*", { capabilities = capabilities })
+
       -- Godot
       vim.lsp.config("gdscript", {
-        capabilities = capabilities,
         filetypes = { "gd", "gdscript" },
       })
-      vim.lsp.enable("gdscript")
-
-      -- Golang
-      vim.lsp.config("gopls", {
-        capabilities = capabilities,
-      })
-      vim.lsp.enable("gopls")
-
-      -- Lua
-      vim.lsp.config("lua_ls", {
-        capabilities = capabilities,
-      })
-      vim.lsp.enable("lua_ls")
-
-      -- Python
-      vim.lsp.config("ty", { capabilities = capabilities })
-      vim.lsp.enable("ty")
-
-      vim.lsp.config("ruff", { capabilities = capabilities })
-      vim.lsp.enable("ruff")
-
-      -- Rust
-      vim.lsp.config("rust_analyzer", { capabilities = capabilities })
-      vim.lsp.enable("rust_analyzer")
-
-      -- Terraform
-      vim.lsp.config("terraformls", { capabilities = capabilities })
-      vim.lsp.enable("terraformls")
 
       -- Typescript
       local ts_config = {
-        capabilities = capabilities,
         filetypes = {
           "javascript",
           "javascriptreact",
@@ -310,14 +282,45 @@ require("lazy").setup({
         },
       }
       vim.lsp.config("biome", ts_config)
-      vim.lsp.enable("biome")
-
       vim.lsp.config("ts_ls", ts_config)
-      vim.lsp.enable("ts_ls")
 
       -- Zig
-      vim.lsp.config("zls", { capabilities = capabilities })
-      vim.lsp.enable("zls")
+      vim.lsp.config("zls", {
+        settings = {
+          enable_build_on_save = true,
+        },
+      })
+
+      vim.lsp.enable({
+        -- Gleam
+        "gleam",
+
+        -- Godot
+        "gdscript",
+
+        -- Golang
+        "gopls",
+
+        -- Lua
+        "lua_ls",
+
+        -- Python
+        "ruff",
+        "ty",
+
+        -- Rust
+        "rust_analyzer",
+
+        -- Terraform
+        "terraformls",
+
+        -- Typescript
+        "biome",
+        "ts_ls",
+
+        -- Zig
+        "zls",
+      })
     end,
     init = function()
       vim.g.coq_settings = {
